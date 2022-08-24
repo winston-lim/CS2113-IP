@@ -23,5 +23,6 @@ public class Duke {
         System.out.println("------------------------------");
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("------------------------------");
+        ss.close();
     }
 }
