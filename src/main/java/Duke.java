@@ -6,6 +6,11 @@ public class Duke {
     static final String LINE_SEPERATOR = "------------------------------";
     static final String RESPONSE_INDENTATION = "    ";
 
+    /**
+     * This is the main method that runs on execution.
+     * 
+     * @param args an array of string inputs
+     */
     public static void main(String[] args) {
         // intialize variables
         Scanner ss = new Scanner(System.in);
@@ -22,8 +27,9 @@ public class Duke {
             List<String> outputs = new ArrayList<String>();
             if (inputs[0].equals("list")) { // list inputs
                 List<Task> recordedTasks = taskManager.getRecordedTasks();
-                if (recordedTasks.size() == 0)
+                if (recordedTasks.size() == 0) {
                     outputs.add("No recorded tasks");
+                }
                 for (int i = 0; i < taskManager.getTaskCount(); ++i) {
                     outputs.add((i + 1) + ". " + "[" + recordedTasks.get(i).getStatusIcon() + "] "
                             + recordedTasks.get(i).getDescription());
@@ -55,6 +61,9 @@ public class Duke {
         printFinalGreeting();
     }
 
+    /**
+     * Prints an intial greeting.
+     */
     public static void printIntialGreeting() {
         System.out.println(LINE_SEPERATOR);
         System.out.println("Hello! I'm Duke");
@@ -62,12 +71,23 @@ public class Duke {
         System.out.println(LINE_SEPERATOR);
     }
 
+    /**
+     * Prints a farewell greeting.
+     */
     public static void printFinalGreeting() {
         System.out.println(LINE_SEPERATOR);
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println(LINE_SEPERATOR);
     }
 
+    /**
+     * Prints a response with proper indentation
+     * and separators between lines.
+     * Note that RESPONSE_INDENTATION and LINE_SEPARATOR are class-level constants
+     * defined above
+     * 
+     * @param responses a list of string responses
+     */
     public static void printResponse(List<String> responses) {
         if (responses.size() != 0) {
             System.out.println(RESPONSE_INDENTATION + LINE_SEPERATOR);
