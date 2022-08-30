@@ -1,6 +1,6 @@
 public class Task {
     private final String description;
-    private final int id;
+    protected final int id;
     private boolean isDone;
 
     /**
@@ -24,14 +24,14 @@ public class Task {
     }
 
     public final String getStatusIcon() {
-        return (this.isDone ? "X" : " "); // mark done task with X
+        return (this.isDone ? "[X]" : "[ ]"); // mark done task with X
     }
 
     public final String getDescription() {
         return this.description;
     }
 
-    public final String getStatusDescription() {
-        return this.id + ". " + "[" + getStatusIcon() + "] " + getDescription();
+    public String getStatusDescription() {
+        return this.id + ". " + getStatusIcon() + " " + getDescription();
     }
 }
