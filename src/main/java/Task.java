@@ -1,5 +1,5 @@
 public class Task {
-    private final String description;
+    protected final String title;
     protected final int id;
     private boolean isDone;
 
@@ -9,8 +9,8 @@ public class Task {
      * @param description a string of the description of the task
      * @param id a integer representing a unique identifier of the task
      */
-    public Task(String description, int id) {
-        this.description = description;
+    public Task(String title, int id) {
+        this.title = title;
         this.isDone = false;
         this.id = id;
     }
@@ -27,11 +27,15 @@ public class Task {
         return (this.isDone ? "[X]" : "[ ]"); // mark done task with X
     }
 
-    public final String getDescription() {
-        return this.description;
+    public String getDescription() {
+        return this.title;
     }
 
     public String getStatusDescription() {
+        return getStatusIcon() + " " + getDescription();
+    }
+
+    public String getStatusDescriptionWithId() {
         return this.id + ". " + getStatusIcon() + " " + getDescription();
     }
 }

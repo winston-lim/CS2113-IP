@@ -53,7 +53,7 @@ public class Duke {
         }
         default: {
             // ConversationManager.printErrorResponse(List.of("command not found"));
-            taskManager.addTask(command);
+            taskManager.addTask(command, args);
         }
         }
     }
