@@ -17,11 +17,6 @@ public class Event extends Task {
 
     @Override
     public final String getStatusDescription() {
-        return "[T] " + this.getStatusIcon() + " " + this.getDescription();
-    }
-
-    @Override
-    public final String getStatusDescriptionWithId() {
-        return this.id + ". " + "[E] " + this.getStatusIcon() + " " + this.getDescription();
+        return "[E] " + this.getStatusIcon() + " " + this.getDescription();
     }
 }

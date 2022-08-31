@@ -17,11 +17,6 @@ public class Deadline extends Task {
 
     @Override
     public final String getStatusDescription() {
-        return "[T] " + this.getStatusIcon() + " " + this.getDescription();
-    }
-
-    @Override
-    public final String getStatusDescriptionWithId() {
-        return this.id + ". " + "[D] " + this.getStatusIcon() + " " + this.getDescription();
+        return "[D] " + this.getStatusIcon() + " " + this.getDescription();
     }
 }

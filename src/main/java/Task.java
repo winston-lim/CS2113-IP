@@ -36,6 +36,6 @@ public class Task {
     }
 
     public String getStatusDescriptionWithId() {
-        return this.id + ". " + getStatusIcon() + " " + getDescription();
+        return this.id + ". " + this.getStatusDescription();
     }
 }
