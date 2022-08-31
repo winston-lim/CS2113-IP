@@ -13,7 +13,8 @@ public class TaskManager {
     /**
      * Creates a new task.
      * 
-     * @param description description that the new task is created with
+     * @param command a string from user input
+     * @param args an array of strings from user inputs
      */
     public final void addTask(String command, String[] args) {
         if (args.length == 0) {

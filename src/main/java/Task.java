@@ -6,7 +6,7 @@ public class Task {
     /**
      * Constructor method.
      * 
-     * @param description a string of the description of the task
+     * @param title a string of the title of the task
      * @param id a integer representing a unique identifier of the task
      */
     public Task(String title, int id) {
