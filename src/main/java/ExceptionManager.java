@@ -1,6 +1,11 @@
 public class ExceptionManager {
     public static final String DEFAULT_ERROR_MESSAGE = "something went wrong";
 
+    /**
+     * Handles known exceptions by printing a corresponding message to the user.
+     * 
+     * @param e Exceptions thrown from the main program
+     */
     public static void handleException(Exception e) {
         String errorMessage = DEFAULT_ERROR_MESSAGE;
         if (e instanceof IndexOutOfBoundsException) {
