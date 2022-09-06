@@ -1,6 +1,11 @@
-import java.util.List;
+package user;
 
-class UserInteraction implements UserInteractionInterface {
+import java.util.List;
+import command.Command;
+import console.Console;
+import exception.ExceptionManager;
+
+public class UserInteraction implements UserInteractionInterface {
     private static final int COMMAND_INDEX = 0;
     private static final int COMMAND_TOKEN_SIZE = 1;
     private static final int ARGS_INDEX = 1;

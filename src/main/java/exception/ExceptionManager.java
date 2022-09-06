@@ -1,3 +1,7 @@
+package exception;
+
+import console.Console;
+
 public class ExceptionManager {
     public static final String DEFAULT_ERROR_MESSAGE = "something went wrong";
 

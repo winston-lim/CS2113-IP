@@ -1,8 +1,10 @@
+package console;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-abstract class Console {
+public abstract class Console {
     private static final String RESPONSE_INDENTATION = "    ";
     private static final String LINE_SEPERATOR = "------------------------------";
     private static final String LOGO =

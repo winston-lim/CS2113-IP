@@ -1,3 +1,5 @@
+package user;
+
 interface UserInteractionInterface {
     void intializeConversation();
 

@@ -1,3 +1,5 @@
+package task;
+
 public class Event extends Task {
     private static final String EVENT_PREFIX = "[E] ";
     private final String duration;

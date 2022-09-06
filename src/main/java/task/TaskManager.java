@@ -1,6 +1,11 @@
+package task;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import console.Console;
+import exception.InsufficentArgumentsException;
+import exception.TaskNotFoundException;
 
 public class TaskManager implements TaskManagerInterface {
     private static final String DEADLINE_DIVIDER = "/by";
@@ -16,7 +21,7 @@ public class TaskManager implements TaskManagerInterface {
     private final List<Task> recordedTasks;
     private static int taskCount = 0;
 
-    TaskManager() {
+    public TaskManager() {
         this.recordedTasks = new ArrayList<Task>();
     }
 
