@@ -1,3 +1,5 @@
+package task;
+
 public class Task implements TaskInterface {
     private static final String STATUS_NOT_DONE = "[ ]";
     private static final String STATUS_DONE = "[X]";

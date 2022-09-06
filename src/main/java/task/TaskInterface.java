@@ -1,3 +1,5 @@
+package task;
+
 interface TaskInterface {
     public boolean getStatus();
 

@@ -1,4 +1,11 @@
-class Command implements CommandInterface {
+package command;
+
+import exception.CommandNotFoundException;
+import exception.InsufficentArgumentsException;
+import exception.TaskNotFoundException;
+import task.TaskManager;
+
+public class Command implements CommandInterface {
     private static final String COMMAND_LIST = "list";
     private static final String COMMAND_MARK_TASK = "mark";
     private static final String COMMAND_UNMARK_TASK = "unmark";
@@ -11,7 +18,7 @@ class Command implements CommandInterface {
     private final String command;
     private final String[] args;
 
-    Command(String command, String[] args) {
+    public Command(String command, String[] args) {
         this.command = command;
         this.args = args;
     }

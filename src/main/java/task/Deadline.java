@@ -1,3 +1,5 @@
+package task;
+
 public class Deadline extends Task {
     private static final String DEADLINE_PREFIX = "[D] ";
     private final String deadline;
