@@ -25,12 +25,16 @@ public class Duke {
 
         // maintain conversation
         while (!inputs.get(COMMAND_INDEX)[COMMAND_TOKEN_SIZE - 1].equals("bye")) {
-            String command = inputs.get(COMMAND_INDEX)[COMMAND_TOKEN_SIZE - 1];
-            String[] userArgs = inputs.get(ARGS_INDEX);
+            try {
+                String command = inputs.get(COMMAND_INDEX)[COMMAND_TOKEN_SIZE - 1];
+                String[] userArgs = inputs.get(ARGS_INDEX);
 
-            handleCommand(command, userArgs);
-
-            inputs = ConversationManager.getUserInput();
+                handleCommand(command, userArgs);
+            } catch (Exception e) {
+                ExceptionManager.handleException(e);
+            } finally {
+                inputs = ConversationManager.getUserInput();
+            }
         }
 
         ConversationManager.exitConversation();
@@ -43,7 +47,8 @@ public class Duke {
      * @param command any string
      * @param args an array of strings of any length
      */
-    public static void handleCommand(String command, String[] args) {
+    public static void handleCommand(String command, String[] args)
+            throws InsufficentArgumentsException, CommandNotFoundException, TaskNotFoundException {
         switch (command) {
         case COMMAND_LIST:
             taskManager.listTasks();

@@ -10,6 +10,12 @@ public class ConversationManager {
     private static final String RESPONSE_INDENTATION = "    ";
     private static final Scanner sc = new Scanner(System.in);
 
+    /**
+     * Gets user input from IO.
+     * 
+     * @return A list containing 2 String[] elements - the first contains command(s) while the
+     *         second contains arguments(s)
+     */
     public static final List<String[]> getUserInput() {
         String[] inputs = sc.nextLine().split(" ");
         String[] command = Arrays.copyOfRange(inputs, 0, 1);

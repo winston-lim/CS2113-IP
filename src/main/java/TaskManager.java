@@ -23,10 +23,10 @@ public class TaskManager {
      * @param command a string from user input
      * @param args an array of strings from user inputs
      */
-    public final void addTask(String command, String[] args) {
+    public final void addTask(String command, String[] args)
+            throws InsufficentArgumentsException, CommandNotFoundException {
         if (args.length == 0) {
-            ConversationManager.printErrorResponse("no such command or insufficient arguments");
-            return;
+            throw new InsufficentArgumentsException();
         }
         String title;
         int index;
@@ -51,8 +51,7 @@ public class TaskManager {
             recordedTasks.add(new Event(title, taskCount, duration));
             break;
         default:
-            ConversationManager.printErrorResponse("no such command");
-            return;
+            throw new CommandNotFoundException();
         }
         ConversationManager.printNormalResponse("Got it! Added this task: ",
                 "    " + recordedTasks.get(taskCount - 1).getStatusDescription(),
@@ -65,9 +64,11 @@ public class TaskManager {
     public final void listTasks() {
         List<String> messages = new ArrayList<String>();
         messages.add("Here are the tasks in your list:");
+
         for (int i = 0; i < taskCount; ++i) {
             messages.add(recordedTasks.get(i).getStatusDescriptionWithId());
         }
+
         messages.add("Total number of tasks is: " + taskCount);
         ConversationManager.printNormalResponse(messages.toArray(new String[0]));
     }
@@ -77,22 +78,26 @@ public class TaskManager {
      * 
      * @param args a list of string arguments provided by user
      */
-    public final void markTask(String[] args) {
+    public final void markTask(String[] args)
+            throws InsufficentArgumentsException, TaskNotFoundException {
         if (args.length == 0) {
-            ConversationManager.printErrorResponse("insufficient arguments");
+            throw new InsufficentArgumentsException();
+        }
+
+        int taskNum = Integer.parseInt(args[TASK_NUMBER_INDEX]);
+
+        if (taskNum < MINIMUM_TASK_NUMBER || taskNum > recordedTasks.size()) {
+            throw new TaskNotFoundException();
+        }
+
+        if (recordedTasks.get(taskNum - 1).getStatus()) {
+            ConversationManager.printNormalResponse("Task is already marked");
             return;
         }
-        int taskNum = Integer.parseInt(args[TASK_NUMBER_INDEX]);
-        if (taskNum < MINIMUM_TASK_NUMBER || taskNum > recordedTasks.size()) { // task does not
-                                                                               // exist
-            ConversationManager.printErrorResponse("task does not exist");
-        } else if (recordedTasks.get(taskNum - 1).getStatus()) {
-            ConversationManager.printErrorResponse("task is already marked");
-        } else { // task exists
-            recordedTasks.get(taskNum - 1).setStatus(true);
-            ConversationManager.printNormalResponse("I've marked this task: ",
-                    recordedTasks.get(taskNum - 1).getStatusDescription());
-        }
+
+        recordedTasks.get(taskNum - 1).setStatus(true);
+        ConversationManager.printNormalResponse("I've marked this task: ",
+                recordedTasks.get(taskNum - 1).getStatusDescription());
     }
 
     /**
@@ -100,21 +105,24 @@ public class TaskManager {
      * 
      * @param args a list of string arguments provided by user
      */
-    public final void unmarkTask(String[] args) {
+    public final void unmarkTask(String[] args)
+            throws InsufficentArgumentsException, TaskNotFoundException {
         if (args.length == 0) {
-            ConversationManager.printErrorResponse("insufficient arguments");
-            return;
+            throw new InsufficentArgumentsException();
         }
         int taskNum = Integer.parseInt(args[TASK_NUMBER_INDEX]);
-        if (taskNum < MINIMUM_TASK_NUMBER || taskNum > recordedTasks.size()) { // task does not
-                                                                               // exist
-            ConversationManager.printErrorResponse("task does not exist");
-        } else if (!recordedTasks.get(taskNum - 1).getStatus()) {
-            ConversationManager.printErrorResponse("task is not yet marked");
-        } else { // task exists
-            recordedTasks.get(taskNum - 1).setStatus(false);
-            ConversationManager.printNormalResponse("I've unmarked this task: ",
-                    recordedTasks.get(taskNum - 1).getStatusDescription());
+
+        if (taskNum < MINIMUM_TASK_NUMBER || taskNum > recordedTasks.size()) {
+            throw new TaskNotFoundException();
         }
+
+        if (!recordedTasks.get(taskNum - 1).getStatus()) {
+            ConversationManager.printNormalResponse("Task has not been marked");
+            return;
+        }
+
+        recordedTasks.get(taskNum - 1).setStatus(false);
+        ConversationManager.printNormalResponse("I've unmarked this task: ",
+                recordedTasks.get(taskNum - 1).getStatusDescription());
     }
 }
