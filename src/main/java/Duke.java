@@ -39,22 +39,17 @@ public class Duke {
      */
     public static void handleCommand(String command, String[] args) {
         switch (command) {
-        case "list": {
+        case "list":
             taskManager.listTasks();
             break;
-        }
-        case "mark": {
+        case "mark":
             taskManager.markTask(args);
             break;
-        }
-        case "unmark": {
+        case "unmark":
             taskManager.unmarkTask(args);
             break;
-        }
-        default: {
-            // ConversationManager.printErrorResponse(List.of("command not found"));
+        default:
             taskManager.addTask(command, args);
-        }
         }
     }
 
