@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TaskManager {
+public class TaskManager implements TaskManagerInterface {
     private static final String DEADLINE_DIVIDER = "/by";
     private static final String DURATION_DIVIDER = "/at";
 
@@ -21,11 +21,28 @@ public class TaskManager {
     }
 
     /**
+     * Lists all recorded tasks.
+     */
+    @Override
+    public final void listTasks() {
+        List<String> messages = new ArrayList<String>();
+        messages.add("Here are the tasks in your list:");
+
+        for (int i = 0; i < taskCount; ++i) {
+            messages.add(recordedTasks.get(i).getStatusDescriptionWithId());
+        }
+
+        messages.add("Total number of tasks is: " + taskCount);
+        Console.printNormalResponse(messages.toArray(new String[0]));
+    }
+
+    /**
      * Creates a new task.
      * 
      * @param task a string representing the task type
      * @param args an array of strings from user inputs
      */
+    @Override
     public final void addTask(String task, String[] args) throws InsufficentArgumentsException {
         if (args.length == 0) {
             throw new InsufficentArgumentsException();
@@ -63,25 +80,11 @@ public class TaskManager {
     }
 
     /**
-     * Lists all recorded tasks.
-     */
-    public final void listTasks() {
-        List<String> messages = new ArrayList<String>();
-        messages.add("Here are the tasks in your list:");
-
-        for (int i = 0; i < taskCount; ++i) {
-            messages.add(recordedTasks.get(i).getStatusDescriptionWithId());
-        }
-
-        messages.add("Total number of tasks is: " + taskCount);
-        Console.printNormalResponse(messages.toArray(new String[0]));
-    }
-
-    /**
      * Marks a task as done by calling Task.setIsDone.
      * 
      * @param args a list of string arguments provided by user
      */
+    @Override
     public final void markTask(String[] args)
             throws InsufficentArgumentsException, TaskNotFoundException {
         if (args.length == 0) {
@@ -109,6 +112,7 @@ public class TaskManager {
      * 
      * @param args a list of string arguments provided by user
      */
+    @Override
     public final void unmarkTask(String[] args)
             throws InsufficentArgumentsException, TaskNotFoundException {
         if (args.length == 0) {
