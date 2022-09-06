@@ -23,7 +23,7 @@ public class TaskManager {
     /**
      * Creates a new task.
      * 
-     * @param command a string from user input
+     * @param task a string representing the task type
      * @param args an array of strings from user inputs
      */
     public final void addTask(String task, String[] args) throws InsufficentArgumentsException {
@@ -54,9 +54,10 @@ public class TaskManager {
             String duration = String.join(" ", Arrays.copyOfRange(args, index + 1, args.length));
             recordedTasks.add(new Event(title, taskCount, duration));
             break;
+        default:
         }
 
-        UserInteraction.printNormalResponse("Got it! Added this task: ",
+        Console.printNormalResponse("Got it! Added this task: ",
                 "    " + recordedTasks.get(taskCount - 1).getStatusDescription(),
                 "You now have: " + taskCount + " tasks");
     }
@@ -73,7 +74,7 @@ public class TaskManager {
         }
 
         messages.add("Total number of tasks is: " + taskCount);
-        UserInteraction.printNormalResponse(messages.toArray(new String[0]));
+        Console.printNormalResponse(messages.toArray(new String[0]));
     }
 
     /**
@@ -94,12 +95,12 @@ public class TaskManager {
         }
 
         if (recordedTasks.get(taskNum - 1).getStatus()) {
-            UserInteraction.printNormalResponse("Task is already marked");
+            Console.printNormalResponse("Task is already marked");
             return;
         }
 
         recordedTasks.get(taskNum - 1).setStatus(true);
-        UserInteraction.printNormalResponse("I've marked this task: ",
+        Console.printNormalResponse("I've marked this task: ",
                 recordedTasks.get(taskNum - 1).getStatusDescription());
     }
 
@@ -120,12 +121,12 @@ public class TaskManager {
         }
 
         if (!recordedTasks.get(taskNum - 1).getStatus()) {
-            UserInteraction.printNormalResponse("Task has not been marked");
+            Console.printNormalResponse("Task has not been marked");
             return;
         }
 
         recordedTasks.get(taskNum - 1).setStatus(false);
-        UserInteraction.printNormalResponse("I've unmarked this task: ",
+        Console.printNormalResponse("I've unmarked this task: ",
                 recordedTasks.get(taskNum - 1).getStatusDescription());
     }
 }

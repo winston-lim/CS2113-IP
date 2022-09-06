@@ -20,6 +20,6 @@ public class ExceptionManager {
         if (e instanceof TaskNotFoundException) {
             errorMessage = "task specified was not found";
         }
-        UserInteraction.printErrorResponse(errorMessage);
+        Console.printErrorResponse(errorMessage);
     }
 }

@@ -86,6 +86,6 @@ What can I do for you?
     3. [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
     Total number of tasks is: 3
     ------------------------------
-------------------------------
-Bye. Hope to see you again soon!
-------------------------------
+    ------------------------------
+    Bye. Hope to see you again soon!
+    ------------------------------
