@@ -5,11 +5,14 @@ import java.util.List;
 public class TaskManager {
     private static final String DEADLINE_DIVIDER = "/by";
     private static final String DURATION_DIVIDER = "/at";
-    private static final String COMMAND_TODO = "todo";
-    private static final String COMMAND_DEADLINE = "deadline";
-    private static final String COMMAND_EVENT = "event";
+
+    private static final String TASK_TODO = "todo";
+    private static final String TASK_DEADLINE = "deadline";
+    private static final String TASK_EVENT = "event";
+
     private static final int TASK_NUMBER_INDEX = 0;
     private static final int MINIMUM_TASK_NUMBER = 1;
+
     private final List<Task> recordedTasks;
     private static int taskCount = 0;
 
@@ -23,36 +26,36 @@ public class TaskManager {
      * @param command a string from user input
      * @param args an array of strings from user inputs
      */
-    public final void addTask(String command, String[] args)
-            throws InsufficentArgumentsException, CommandNotFoundException {
+    public final void addTask(String task, String[] args) throws InsufficentArgumentsException {
         if (args.length == 0) {
             throw new InsufficentArgumentsException();
         }
+
         String title;
         int index;
-        switch (command) {
-        case COMMAND_TODO:
+
+        switch (task) {
+        case TASK_TODO:
             taskCount++;
             title = String.join(" ", args);
             recordedTasks.add(new Todo(title, taskCount));
             break;
-        case COMMAND_DEADLINE:
+        case TASK_DEADLINE:
             taskCount++;
             index = Arrays.asList(args).indexOf(DEADLINE_DIVIDER);
             title = String.join(" ", Arrays.copyOfRange(args, 0, index));
             String deadline = String.join(" ", Arrays.copyOfRange(args, index + 1, args.length));
             recordedTasks.add(new Deadline(title, taskCount, deadline));
             break;
-        case COMMAND_EVENT:
+        case TASK_EVENT:
             taskCount++;
             index = Arrays.asList(args).indexOf(DURATION_DIVIDER);
             title = String.join(" ", Arrays.copyOfRange(args, 0, index));
             String duration = String.join(" ", Arrays.copyOfRange(args, index + 1, args.length));
             recordedTasks.add(new Event(title, taskCount, duration));
             break;
-        default:
-            throw new CommandNotFoundException();
         }
+
         ConversationManager.printNormalResponse("Got it! Added this task: ",
                 "    " + recordedTasks.get(taskCount - 1).getStatusDescription(),
                 "You now have: " + taskCount + " tasks");
