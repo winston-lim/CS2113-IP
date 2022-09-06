@@ -56,7 +56,7 @@ public class TaskManager {
             break;
         }
 
-        ConversationManager.printNormalResponse("Got it! Added this task: ",
+        UserInteraction.printNormalResponse("Got it! Added this task: ",
                 "    " + recordedTasks.get(taskCount - 1).getStatusDescription(),
                 "You now have: " + taskCount + " tasks");
     }
@@ -73,7 +73,7 @@ public class TaskManager {
         }
 
         messages.add("Total number of tasks is: " + taskCount);
-        ConversationManager.printNormalResponse(messages.toArray(new String[0]));
+        UserInteraction.printNormalResponse(messages.toArray(new String[0]));
     }
 
     /**
@@ -94,12 +94,12 @@ public class TaskManager {
         }
 
         if (recordedTasks.get(taskNum - 1).getStatus()) {
-            ConversationManager.printNormalResponse("Task is already marked");
+            UserInteraction.printNormalResponse("Task is already marked");
             return;
         }
 
         recordedTasks.get(taskNum - 1).setStatus(true);
-        ConversationManager.printNormalResponse("I've marked this task: ",
+        UserInteraction.printNormalResponse("I've marked this task: ",
                 recordedTasks.get(taskNum - 1).getStatusDescription());
     }
 
@@ -120,12 +120,12 @@ public class TaskManager {
         }
 
         if (!recordedTasks.get(taskNum - 1).getStatus()) {
-            ConversationManager.printNormalResponse("Task has not been marked");
+            UserInteraction.printNormalResponse("Task has not been marked");
             return;
         }
 
         recordedTasks.get(taskNum - 1).setStatus(false);
-        ConversationManager.printNormalResponse("I've unmarked this task: ",
+        UserInteraction.printNormalResponse("I've unmarked this task: ",
                 recordedTasks.get(taskNum - 1).getStatusDescription());
     }
 }

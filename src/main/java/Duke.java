@@ -8,6 +8,6 @@ public class Duke {
      */
     public static void main(String[] args) {
         // Start conversation with user
-        ConversationManager.intializeConversation();
+        UserInteraction.intializeConversation();
     }
 }

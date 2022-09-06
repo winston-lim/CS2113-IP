@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-abstract class ConversationManager {
+abstract class UserInteraction {
     private static final int COMMAND_INDEX = 0;
     private static final int COMMAND_TOKEN_SIZE = 1;
     private static final int ARGS_INDEX = 1;
@@ -19,7 +19,7 @@ abstract class ConversationManager {
     public static final void intializeConversation() {
         printGreeting();
 
-        List<String[]> inputs = ConversationManager.getUserInput();
+        List<String[]> inputs = UserInteraction.getUserInput();
         String command = inputs.get(COMMAND_INDEX)[COMMAND_TOKEN_SIZE - 1];
 
         // maintain conversation
@@ -30,12 +30,12 @@ abstract class ConversationManager {
             } catch (Exception e) {
                 ExceptionManager.handleException(e);
             } finally {
-                inputs = ConversationManager.getUserInput();
+                inputs = UserInteraction.getUserInput();
                 command = inputs.get(COMMAND_INDEX)[COMMAND_TOKEN_SIZE - 1];
             }
         }
 
-        ConversationManager.exitConversation();
+        UserInteraction.exitConversation();
     }
 
     /**
