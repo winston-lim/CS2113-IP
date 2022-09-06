@@ -1,6 +1,12 @@
 import java.util.List;
 
 public class Duke {
+    private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_MARK_TASK = "mark";
+    private static final String COMMAND_UNMARK_TASK = "unmark";
+    private static final int COMMAND_INDEX = 0;
+    private static final int COMMAND_TOKEN_SIZE = 1;
+    private static final int ARGS_INDEX = 1;
     private static TaskManager taskManager;
 
     /**
@@ -18,9 +24,9 @@ public class Duke {
         List<String[]> inputs = ConversationManager.getUserInput();
 
         // maintain conversation
-        while (!inputs.get(0)[0].equals("bye")) {
-            String command = inputs.get(0)[0];
-            String[] userArgs = inputs.get(1);
+        while (!inputs.get(COMMAND_INDEX)[COMMAND_TOKEN_SIZE - 1].equals("bye")) {
+            String command = inputs.get(COMMAND_INDEX)[COMMAND_TOKEN_SIZE - 1];
+            String[] userArgs = inputs.get(ARGS_INDEX);
 
             handleCommand(command, userArgs);
 
@@ -39,13 +45,13 @@ public class Duke {
      */
     public static void handleCommand(String command, String[] args) {
         switch (command) {
-        case "list":
+        case COMMAND_LIST:
             taskManager.listTasks();
             break;
-        case "mark":
+        case COMMAND_MARK_TASK:
             taskManager.markTask(args);
             break;
-        case "unmark":
+        case COMMAND_UNMARK_TASK:
             taskManager.unmarkTask(args);
             break;
         default:

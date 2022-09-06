@@ -5,9 +5,9 @@ import java.util.List;
 public class TaskManager {
     private static final String DEADLINE_DIVIDER = "/by";
     private static final String DURATION_DIVIDER = "/at";
-    private static final String TODO = "todo";
-    private static final String DEADLINE = "deadline";
-    private static final String EVENT = "event";
+    private static final String COMMAND_TODO = "todo";
+    private static final String COMMAND_DEADLINE = "deadline";
+    private static final String COMMAND_EVENT = "event";
     private static final int TASK_NUMBER_INDEX = 0;
     private static final int MINIMUM_TASK_NUMBER = 1;
     private final List<Task> recordedTasks;
@@ -25,26 +25,25 @@ public class TaskManager {
      */
     public final void addTask(String command, String[] args) {
         if (args.length == 0) {
-            ConversationManager
-                    .printErrorResponse(List.of("no such command or insufficient arguments"));
+            ConversationManager.printErrorResponse("no such command or insufficient arguments");
             return;
         }
         String title;
         int index;
         switch (command) {
-        case TODO:
+        case COMMAND_TODO:
             taskCount++;
             title = String.join(" ", args);
             recordedTasks.add(new Todo(title, taskCount));
             break;
-        case DEADLINE:
+        case COMMAND_DEADLINE:
             taskCount++;
             index = Arrays.asList(args).indexOf(DEADLINE_DIVIDER);
             title = String.join(" ", Arrays.copyOfRange(args, 0, index));
             String deadline = String.join(" ", Arrays.copyOfRange(args, index + 1, args.length));
             recordedTasks.add(new Deadline(title, taskCount, deadline));
             break;
-        case EVENT:
+        case COMMAND_EVENT:
             taskCount++;
             index = Arrays.asList(args).indexOf(DURATION_DIVIDER);
             title = String.join(" ", Arrays.copyOfRange(args, 0, index));
@@ -52,14 +51,12 @@ public class TaskManager {
             recordedTasks.add(new Event(title, taskCount, duration));
             break;
         default:
-            ConversationManager.printErrorResponse(List.of("no such command"));
+            ConversationManager.printErrorResponse("no such command");
             return;
         }
-        List<String> messages = new ArrayList<String>();
-        messages.add("Got it! Added this task: ");
-        messages.add("    " + recordedTasks.get(taskCount - 1).getStatusDescription());
-        messages.add("You now have: " + taskCount + " tasks");
-        ConversationManager.printNormalResponse(messages);
+        ConversationManager.printNormalResponse("Got it! Added this task: ",
+                "    " + recordedTasks.get(taskCount - 1).getStatusDescription(),
+                "You now have: " + taskCount + " tasks");
     }
 
     /**
@@ -72,7 +69,7 @@ public class TaskManager {
             messages.add(recordedTasks.get(i).getStatusDescriptionWithId());
         }
         messages.add("Total number of tasks is: " + taskCount);
-        ConversationManager.printNormalResponse(messages);
+        ConversationManager.printNormalResponse(messages.toArray(new String[0]));
     }
 
     /**
@@ -82,21 +79,19 @@ public class TaskManager {
      */
     public final void markTask(String[] args) {
         if (args.length == 0) {
-            ConversationManager.printErrorResponse(List.of("insufficient arguments"));
+            ConversationManager.printErrorResponse("insufficient arguments");
             return;
         }
         int taskNum = Integer.parseInt(args[TASK_NUMBER_INDEX]);
         if (taskNum < MINIMUM_TASK_NUMBER || taskNum > recordedTasks.size()) { // task does not
                                                                                // exist
-            ConversationManager.printErrorResponse(List.of("task does not exist"));
+            ConversationManager.printErrorResponse("task does not exist");
         } else if (recordedTasks.get(taskNum - 1).getStatus()) {
-            ConversationManager.printErrorResponse(List.of("task is already marked"));
+            ConversationManager.printErrorResponse("task is already marked");
         } else { // task exists
             recordedTasks.get(taskNum - 1).setStatus(true);
-            List<String> messages = new ArrayList<String>();
-            messages.add("I've marked this task: ");
-            messages.add(recordedTasks.get(taskNum - 1).getStatusDescription());
-            ConversationManager.printNormalResponse(messages);
+            ConversationManager.printNormalResponse("I've marked this task: ",
+                    recordedTasks.get(taskNum - 1).getStatusDescription());
         }
     }
 
@@ -107,21 +102,19 @@ public class TaskManager {
      */
     public final void unmarkTask(String[] args) {
         if (args.length == 0) {
-            ConversationManager.printErrorResponse(List.of("insufficient arguments"));
+            ConversationManager.printErrorResponse("insufficient arguments");
             return;
         }
         int taskNum = Integer.parseInt(args[TASK_NUMBER_INDEX]);
         if (taskNum < MINIMUM_TASK_NUMBER || taskNum > recordedTasks.size()) { // task does not
                                                                                // exist
-            ConversationManager.printErrorResponse(List.of("task does not exist"));
+            ConversationManager.printErrorResponse("task does not exist");
         } else if (!recordedTasks.get(taskNum - 1).getStatus()) {
-            ConversationManager.printErrorResponse(List.of("task is not yet marked"));
+            ConversationManager.printErrorResponse("task is not yet marked");
         } else { // task exists
             recordedTasks.get(taskNum - 1).setStatus(false);
-            List<String> messages = new ArrayList<String>();
-            messages.add("I've unmarked this task: ");
-            messages.add(recordedTasks.get(taskNum - 1).getStatusDescription());
-            ConversationManager.printNormalResponse(messages);
+            ConversationManager.printNormalResponse("I've unmarked this task: ",
+                    recordedTasks.get(taskNum - 1).getStatusDescription());
         }
     }
 }

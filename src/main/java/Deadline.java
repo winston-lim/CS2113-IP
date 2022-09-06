@@ -1,4 +1,5 @@
 public class Deadline extends Task {
+    private static final String DEADLINE_PREFIX = "[D] ";
     private final String deadline;
 
     Deadline(String description, int id, String deadline) {
@@ -17,6 +18,6 @@ public class Deadline extends Task {
 
     @Override
     public final String getStatusDescription() {
-        return "[D] " + this.getStatusIcon() + " " + this.getDescription();
+        return DEADLINE_PREFIX + this.getStatusIcon() + " " + this.getDescription();
     }
 }

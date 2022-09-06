@@ -1,4 +1,6 @@
 public class Task {
+    private static final String STATUS_NOT_DONE = "[ ]";
+    private static final String STATUS_DONE = "[X]";
     protected final String title;
     protected final int id;
     private boolean isDone;
@@ -24,7 +26,7 @@ public class Task {
     }
 
     public final String getStatusIcon() {
-        return (this.isDone ? "[X]" : "[ ]"); // mark done task with X
+        return (this.isDone ? STATUS_DONE : STATUS_NOT_DONE); // mark done task with X
     }
 
     public String getDescription() {

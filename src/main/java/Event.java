@@ -1,4 +1,5 @@
 public class Event extends Task {
+    private static final String EVENT_PREFIX = "[E] ";
     private final String duration;
 
     Event(String description, int id, String duration) {
@@ -17,6 +18,6 @@ public class Event extends Task {
 
     @Override
     public final String getStatusDescription() {
-        return "[E] " + this.getStatusIcon() + " " + this.getDescription();
+        return EVENT_PREFIX + this.getStatusIcon() + " " + this.getDescription();
     }
 }
