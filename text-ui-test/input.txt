@@ -2,19 +2,19 @@ list
 todo return cs2113 textbook
 list
 mark 0
-mark 1
-unmark 1
+mark 5
+unmark 5
 deadline borrow cs2102 textbook /by 9 November 2022
 list
-mark 3
-unmark 2
-mark 2
-mark 2
+mark 7
+unmark 6
+mark 6
+mark 6
 event attend TIPS closing ceremoney /at 25th November 2-4pm
 list
-mark 3
-unmark 3
-unmark 2
+mark 7
+unmark 7
+unmark 6
 list
 delete 0
 delete 4

@@ -4,8 +4,13 @@ public class Event extends Task {
     private static final String EVENT_PREFIX = "[E] ";
     private final String duration;
 
-    Event(String description, int id, String duration) {
-        super(description, id);
+    Event(String description, String duration) {
+        super(description);
+        this.duration = duration;
+    }
+
+    public Event(String description, String duration, boolean isDone) {
+        super(description, isDone);
         this.duration = duration;
     }
 

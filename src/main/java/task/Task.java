@@ -4,7 +4,6 @@ public class Task implements TaskInterface {
     private static final String STATUS_NOT_DONE = "[ ]";
     private static final String STATUS_DONE = "[X]";
     protected final String title;
-    protected final int id;
     private boolean isDone;
 
     /**
@@ -13,10 +12,14 @@ public class Task implements TaskInterface {
      * @param title a string of the title of the task
      * @param id a integer representing a unique identifier of the task
      */
-    public Task(String title, int id) {
+    public Task(String title) {
         this.title = title;
         this.isDone = false;
-        this.id = id;
+    }
+
+    public Task(String title, boolean isDone) {
+        this.title = title;
+        this.isDone = isDone;
     }
 
     @Override

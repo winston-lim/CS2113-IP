@@ -4,8 +4,13 @@ public class Deadline extends Task {
     private static final String DEADLINE_PREFIX = "[D] ";
     private final String deadline;
 
-    Deadline(String description, int id, String deadline) {
-        super(description, id);
+    Deadline(String description, String deadline) {
+        super(description);
+        this.deadline = deadline;
+    }
+
+    public Deadline(String description, String deadline, boolean isDone) {
+        super(description, isDone);
         this.deadline = deadline;
     }
 
