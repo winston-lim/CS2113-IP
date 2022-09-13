@@ -33,10 +33,9 @@ public class TaskManager implements TaskManagerInterface {
         List<String> messages = new ArrayList<String>();
         messages.add("Here are the tasks in your list:");
 
-        for (int i = 0; i < taskCount; ++i) {
-            messages.add(recordedTasks.get(i).getStatusDescriptionWithId());
+        for (int i = 1; i <= taskCount; ++i) {
+            messages.add(i + ". " + recordedTasks.get(i - 1).getStatusDescription());
         }
-
         messages.add("Total number of tasks is: " + taskCount);
         Console.printNormalResponse(messages.toArray(new String[0]));
     }
@@ -82,6 +81,30 @@ public class TaskManager implements TaskManagerInterface {
         Console.printNormalResponse("Got it! Added this task: ",
                 "    " + recordedTasks.get(taskCount - 1).getStatusDescription(),
                 "You now have: " + taskCount + " tasks");
+    }
+
+    /**
+     * Removes a task if it exists.
+     * 
+     * @param args a list of string arguments provided by user
+     */
+    public void deleteTask(String[] args)
+            throws InsufficentArgumentsException, TaskNotFoundException {
+        if (args.length == 0) {
+            throw new InsufficentArgumentsException();
+        }
+
+        int taskNum = Integer.parseInt(args[TASK_NUMBER_INDEX]);
+
+        if (taskNum < MINIMUM_TASK_NUMBER || taskNum > recordedTasks.size()) {
+            throw new TaskNotFoundException();
+        }
+
+        taskCount--;
+        Console.printNormalResponse("Noted. I've removed this task:",
+                "    " + recordedTasks.get(taskCount - 1).getStatusDescription(),
+                "You now have: " + taskCount + " tasks");
+        recordedTasks.remove(taskNum - 1);
     }
 
     /**
