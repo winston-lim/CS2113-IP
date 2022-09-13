@@ -14,15 +14,25 @@ import task.Event;
 
 
 public class FileManager implements FileManagerInterface {
-    private static final String DATA_TOKEN_SEPARATOR = " \\| ";
-    private static final String TASK_DATE_SEPARATOR = "(";
+    private static final String FILE_RELATIVE_PATH = "./data/duke.txt";
+
+    private static final String DATA_TOKEN_SEPARATOR = " | ";
+    private static final String DATA_TOKEN_SEPARATOR_REGEX = " \\| ";
+    private static final String TASK_DATE_SEPARATOR_REGEX = "\\(";
+
+    private static final String TASK_TIMING_SEPARATOR = ":";
+
+    private static final int TASK_TYPE_INDEX = 1;
+    private static final int TASK_STATUS_INDEX = 5;
+    private static final int TASK_TITLE_INDEX = 8;
+
     private static final char TODO_TASK_TYPE = 'T';
     private static final char DEADLINE_TASK_TYPE = 'D';
     private static final char EVENT_TASK_TYPE = 'E';
     private final File file;
 
     public FileManager() {
-        this.file = new File("./data/duke.txt");
+        this.file = new File(FILE_RELATIVE_PATH);
     }
 
     public List<Task> getTasks() throws InvalidDataException {
@@ -32,7 +42,7 @@ public class FileManager implements FileManagerInterface {
             if (this.file.exists()) {
                 while (sc.hasNextLine()) {
                     String task = sc.nextLine();
-                    String[] taskDetails = task.split(DATA_TOKEN_SEPARATOR);
+                    String[] taskDetails = task.split(DATA_TOKEN_SEPARATOR_REGEX);
                     char taskType = taskDetails[0].charAt(0);
                     boolean taskStatus = Integer.parseInt(taskDetails[1]) == 1;
                     String taskTitle = taskDetails[2];
@@ -62,15 +72,26 @@ public class FileManager implements FileManagerInterface {
 
     private String convertTaskToText(Task task) {
         String taskDescription = task.getStatusDescription();
-        char taskType = taskDescription.charAt(1);
-        int taskStatus = taskDescription.charAt(5) == ' ' ? 0 : 1;
-        String taskTitle = taskDescription.split(TASK_DATE_SEPARATOR)[0].substring(8);
-        return taskType + DATA_TOKEN_SEPARATOR + taskStatus + DATA_TOKEN_SEPARATOR + taskTitle;
+        char taskType = taskDescription.charAt(TASK_TYPE_INDEX);
+        int taskStatus = taskDescription.charAt(TASK_STATUS_INDEX) == ' ' ? 0 : 1;
+        if (taskType == TODO_TASK_TYPE) {
+            return taskType + DATA_TOKEN_SEPARATOR + taskStatus + DATA_TOKEN_SEPARATOR
+                    + taskDescription.substring(TASK_TITLE_INDEX);
+        }
+        String taskTitle =
+                taskDescription.split(TASK_DATE_SEPARATOR_REGEX)[0].substring(TASK_TITLE_INDEX);
+        String taskTiming =
+                taskDescription.split(TASK_DATE_SEPARATOR_REGEX)[1].split(TASK_TIMING_SEPARATOR)[1];
+        taskTiming = taskTiming.substring(1, taskTiming.length() - 1);
+        return taskType + DATA_TOKEN_SEPARATOR + taskStatus + DATA_TOKEN_SEPARATOR + taskTitle
+                + DATA_TOKEN_SEPARATOR + taskTiming;
     }
 
-    public void saveTask(Task task) throws IOException {
+    public void saveTasks(List<Task> tasks) throws IOException {
         FileWriter fw = new FileWriter(this.file);
-        fw.write(convertTaskToText(task) + System.lineSeparator());
+        for (Task task : tasks) {
+            fw.write(convertTaskToText(task) + System.lineSeparator());
+        }
         fw.close();
     }
 }

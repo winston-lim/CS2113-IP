@@ -8,5 +8,5 @@ import task.Task;
 public interface FileManagerInterface {
     List<Task> getTasks() throws InvalidDataException;
 
-    void saveTask(Task task) throws IOException;
+    void saveTasks(List<Task> tasks) throws IOException;
 }
