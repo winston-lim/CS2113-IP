@@ -1,5 +1,6 @@
 package task;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,9 @@ public class TaskManager implements TaskManagerInterface {
 
     private static FileManager fm = new FileManager();
 
+    /**
+     * Constructor method.
+     */
     public TaskManager() {
         List<Task> tasks = new ArrayList<Task>();
         try {
@@ -60,7 +64,8 @@ public class TaskManager implements TaskManagerInterface {
      * @param args an array of strings from user inputs
      */
     @Override
-    public final void addTask(String task, String[] args) throws InsufficentArgumentsException {
+    public final void addTask(String task, String[] args)
+            throws InsufficentArgumentsException, IOException {
         if (args.length == 0) {
             throw new InsufficentArgumentsException();
         }
@@ -91,11 +96,9 @@ public class TaskManager implements TaskManagerInterface {
         Console.printNormalResponse("Got it! Added this task: ",
                 "    " + recordedTasks.get(this.recordedTasks.size() - 1).getStatusDescription(),
                 "You now have: " + this.recordedTasks.size() + " tasks");
-        try {
-            fm.saveTasks(this.recordedTasks);
-        } catch (Exception e) {
-            System.out.println("cannot save task");
-        }
+
+        // persist updates to local storage
+        fm.saveTasks(recordedTasks);
     }
 
     /**
@@ -104,7 +107,7 @@ public class TaskManager implements TaskManagerInterface {
      * @param args a list of string arguments provided by user
      */
     public void deleteTask(String[] args)
-            throws InsufficentArgumentsException, TaskNotFoundException {
+            throws InsufficentArgumentsException, TaskNotFoundException, IOException {
         if (args.length == 0) {
             throw new InsufficentArgumentsException();
         }
@@ -119,6 +122,8 @@ public class TaskManager implements TaskManagerInterface {
         recordedTasks.remove(taskNum - 1);
         Console.printNormalResponse("Noted. I've removed this task:", "    " + description,
                 "You now have: " + recordedTasks.size() + " tasks");
+        // persist updates to local storage
+        fm.saveTasks(recordedTasks);
     }
 
     /**
@@ -128,7 +133,7 @@ public class TaskManager implements TaskManagerInterface {
      */
     @Override
     public final void markTask(String[] args)
-            throws InsufficentArgumentsException, TaskNotFoundException {
+            throws InsufficentArgumentsException, TaskNotFoundException, IOException {
         if (args.length == 0) {
             throw new InsufficentArgumentsException();
         }
@@ -147,6 +152,8 @@ public class TaskManager implements TaskManagerInterface {
         recordedTasks.get(taskNum - 1).setStatus(true);
         Console.printNormalResponse("I've marked this task: ",
                 recordedTasks.get(taskNum - 1).getStatusDescription());
+        // persist updates to local storage
+        fm.saveTasks(recordedTasks);
     }
 
     /**
@@ -156,7 +163,7 @@ public class TaskManager implements TaskManagerInterface {
      */
     @Override
     public final void unmarkTask(String[] args)
-            throws InsufficentArgumentsException, TaskNotFoundException {
+            throws InsufficentArgumentsException, TaskNotFoundException, IOException {
         if (args.length == 0) {
             throw new InsufficentArgumentsException();
         }
@@ -174,5 +181,7 @@ public class TaskManager implements TaskManagerInterface {
         recordedTasks.get(taskNum - 1).setStatus(false);
         Console.printNormalResponse("I've unmarked this task: ",
                 recordedTasks.get(taskNum - 1).getStatusDescription());
+        // persist updates to local storage
+        fm.saveTasks(recordedTasks);
     }
 }
