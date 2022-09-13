@@ -1,5 +1,6 @@
 package task;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,8 +23,9 @@ public class TaskManager implements TaskManagerInterface {
 
     private final List<Task> recordedTasks;
 
+    private static FileManager fm = new FileManager();
+
     public TaskManager() {
-        FileManager fm = new FileManager();
         List<Task> tasks = new ArrayList<Task>();
         try {
             tasks = fm.getTasks();
@@ -90,6 +92,11 @@ public class TaskManager implements TaskManagerInterface {
         Console.printNormalResponse("Got it! Added this task: ",
                 "    " + recordedTasks.get(this.recordedTasks.size() - 1).getStatusDescription(),
                 "You now have: " + this.recordedTasks.size() + " tasks");
+        try {
+            fm.saveTasks(this.recordedTasks);
+        } catch (Exception e) {
+            System.out.println("cannot save task");
+        }
     }
 
     /**
