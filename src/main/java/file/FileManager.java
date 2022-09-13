@@ -35,6 +35,12 @@ public class FileManager implements FileManagerInterface {
         this.file = new File(FILE_RELATIVE_PATH);
     }
 
+    /**
+     * Reads from the local data file and converts it to a usable format.w
+     * 
+     * @return A list of tasks from the read file, which is empty if the file does not exist or is
+     *         empty.
+     */
     public List<Task> getTasks() throws InvalidDataException {
         try {
             Scanner sc = new Scanner(this.file);
@@ -87,6 +93,11 @@ public class FileManager implements FileManagerInterface {
                 + DATA_TOKEN_SEPARATOR + taskTiming;
     }
 
+    /**
+     * Saves all tasks to data file by overwriting all its contents.
+     * 
+     * @param tasks A list of Task
+     */
     public void saveTasks(List<Task> tasks) throws IOException {
         FileWriter fw = new FileWriter(this.file);
         for (Task task : tasks) {

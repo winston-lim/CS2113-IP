@@ -10,7 +10,6 @@ public class Task implements TaskInterface {
      * Constructor method.
      * 
      * @param title a string of the title of the task
-     * @param id a integer representing a unique identifier of the task
      */
     public Task(String title) {
         this.title = title;
