@@ -10,6 +10,4 @@ interface TaskInterface {
     public String getDescription();
 
     public String getStatusDescription();
-
-    public String getStatusDescriptionWithId();
 }

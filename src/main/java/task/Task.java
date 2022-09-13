@@ -43,9 +43,4 @@ public class Task implements TaskInterface {
     public String getStatusDescription() {
         return getStatusIcon() + " " + getDescription();
     }
-
-    @Override
-    public String getStatusDescriptionWithId() {
-        return this.id + ". " + this.getStatusDescription();
-    }
 }
