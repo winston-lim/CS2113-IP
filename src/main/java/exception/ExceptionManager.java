@@ -1,5 +1,7 @@
 package exception;
 
+import java.io.IOException;
+
 import console.Console;
 
 public class ExceptionManager {
@@ -23,6 +25,9 @@ public class ExceptionManager {
         }
         if (e instanceof TaskNotFoundException) {
             errorMessage = "task specified was not found";
+        }
+        if (e instanceof IOException) {
+            errorMessage = "failed to save locally";
         }
         Console.printErrorResponse(errorMessage);
     }

@@ -1,5 +1,6 @@
 package command;
 
+import java.io.IOException;
 import exception.CommandNotFoundException;
 import exception.InsufficentArgumentsException;
 import exception.TaskNotFoundException;
@@ -24,8 +25,11 @@ public class Command implements CommandInterface {
         this.args = args;
     }
 
-    public void handleCommand()
-            throws CommandNotFoundException, InsufficentArgumentsException, TaskNotFoundException {
+    /**
+     * Handles a command. Throws an CommandNotFoundException if the command does not exist.
+     */
+    public void handleCommand() throws CommandNotFoundException, InsufficentArgumentsException,
+            TaskNotFoundException, IOException {
         switch (command) {
         case COMMAND_LIST:
             taskManager.listTasks();
