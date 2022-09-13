@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import console.Console;
 import exception.InsufficentArgumentsException;
+import exception.InvalidDataException;
 import exception.TaskNotFoundException;
+import file.FileManager;
 
 public class TaskManager implements TaskManagerInterface {
     private static final String DEADLINE_DIVIDER = "/by";
@@ -19,10 +21,19 @@ public class TaskManager implements TaskManagerInterface {
     private static final int MINIMUM_TASK_NUMBER = 1;
 
     private final List<Task> recordedTasks;
-    private static int taskCount = 0;
 
     public TaskManager() {
-        this.recordedTasks = new ArrayList<Task>();
+        FileManager fm = new FileManager();
+        List<Task> tasks = new ArrayList<Task>();
+        try {
+            tasks = fm.getTasks();
+        } catch (InvalidDataException e) {
+            Console.printErrorResponse("could not get saved data");
+        }
+        this.recordedTasks = tasks;
+        for (Task t : recordedTasks) {
+            System.out.println(t.getStatusDescription());
+        }
     }
 
     /**
@@ -33,11 +44,11 @@ public class TaskManager implements TaskManagerInterface {
         List<String> messages = new ArrayList<String>();
         messages.add("Here are the tasks in your list:");
 
-        for (int i = 0; i < taskCount; ++i) {
-            messages.add(recordedTasks.get(i).getStatusDescriptionWithId());
+        for (int i = 1; i <= recordedTasks.size(); ++i) {
+            messages.add(i + ". " + recordedTasks.get(i - 1).getStatusDescription());
         }
 
-        messages.add("Total number of tasks is: " + taskCount);
+        messages.add("Total number of tasks is: " + recordedTasks.size());
         Console.printNormalResponse(messages.toArray(new String[0]));
     }
 
@@ -58,30 +69,27 @@ public class TaskManager implements TaskManagerInterface {
 
         switch (task) {
         case TASK_TODO:
-            taskCount++;
             title = String.join(" ", args);
-            recordedTasks.add(new Todo(title, taskCount));
+            recordedTasks.add(new Todo(title));
             break;
         case TASK_DEADLINE:
-            taskCount++;
             index = Arrays.asList(args).indexOf(DEADLINE_DIVIDER);
             title = String.join(" ", Arrays.copyOfRange(args, 0, index));
             String deadline = String.join(" ", Arrays.copyOfRange(args, index + 1, args.length));
-            recordedTasks.add(new Deadline(title, taskCount, deadline));
+            recordedTasks.add(new Deadline(title, deadline));
             break;
         case TASK_EVENT:
-            taskCount++;
             index = Arrays.asList(args).indexOf(DURATION_DIVIDER);
             title = String.join(" ", Arrays.copyOfRange(args, 0, index));
             String duration = String.join(" ", Arrays.copyOfRange(args, index + 1, args.length));
-            recordedTasks.add(new Event(title, taskCount, duration));
+            recordedTasks.add(new Event(title, duration));
             break;
         default:
         }
 
         Console.printNormalResponse("Got it! Added this task: ",
-                "    " + recordedTasks.get(taskCount - 1).getStatusDescription(),
-                "You now have: " + taskCount + " tasks");
+                "    " + recordedTasks.get(this.recordedTasks.size() - 1).getStatusDescription(),
+                "You now have: " + this.recordedTasks.size() + " tasks");
     }
 
     /**
