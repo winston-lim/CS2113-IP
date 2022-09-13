@@ -12,6 +12,7 @@ public class Command implements CommandInterface {
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_DELETE_TASK = "delete";
 
     private static TaskManager taskManager = new TaskManager();
 
@@ -43,6 +44,9 @@ public class Command implements CommandInterface {
             break;
         case COMMAND_EVENT:
             taskManager.addTask(COMMAND_EVENT, args);
+            break;
+        case COMMAND_DELETE_TASK:
+            taskManager.deleteTask(args);
             break;
         default:
             throw new CommandNotFoundException();

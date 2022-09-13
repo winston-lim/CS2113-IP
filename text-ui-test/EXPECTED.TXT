@@ -87,5 +87,22 @@ What can I do for you?
     Total number of tasks is: 3
     ------------------------------
     ------------------------------
+    Error: task specified was not found
+    ------------------------------
+    ------------------------------
+    Error: task specified was not found
+    ------------------------------
+    ------------------------------
+    Noted. I've removed this task:
+        [D] [ ] borrow cs2102 textbook (by: 9 November 2022)
+    You now have: 2 tasks
+    ------------------------------
+    ------------------------------
+    Here are the tasks in your list:
+    1. [T] [ ] return cs2113 textbook
+    2. [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
+    Total number of tasks is: 2
+    ------------------------------
+    ------------------------------
     Bye. Hope to see you again soon!
     ------------------------------
