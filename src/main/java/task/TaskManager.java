@@ -17,6 +17,7 @@ import user.UserInteraction;
 public class TaskManager implements TaskManagerInterface {
     private static final String FILE_PATH = "./data.txt";
 
+    protected static final String QUERY_TASK_START_TEXT = "Search results:";
     protected static final String LIST_TASK_START_TEXT = "Here are the tasks in your list:";
     protected static final String QUERY_TASK_START_TEXT = "Search results:";
     protected static final String ADD_TASK_START_TEXT = "Got it! Added this task: ";
@@ -200,5 +201,15 @@ public class TaskManager implements TaskManagerInterface {
     private void saveTasks(List<Task> tasks) throws IOException {
         String fileContent = Parser.stringifyTasks(this.recordedTasks);
         this.fileManager.writeToFile(fileContent);
+    }
+
+    public final List<Task> searchByTitle(String query) {
+        List<Task> result = new ArrayList<Task>();
+        for (Task task : recordedTasks) {
+            if (task.getTitle().contains(query)) {
+                result.add(task);
+            }
+        }
+        return result;
     }
 }

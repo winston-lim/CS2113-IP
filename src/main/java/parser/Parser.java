@@ -11,6 +11,7 @@ import command.AddTodoCommand;
 import command.Command;
 import command.DeleteTaskCommand;
 import command.ExitCommand;
+import command.GetTaskWithTitle;
 import command.GetTaskWithDate;
 import command.ListTasksCommand;
 import command.MarkTaskCommand;
@@ -52,8 +53,13 @@ public class Parser {
     private static final String COMMAND_DELETE_TASK = "delete";
     private static final String COMMAND_MARK_TASK = "mark";
     private static final String COMMAND_UNMARK_TASK = "unmark";
+    private static final String COMMAND_SEARCH_TITLE = "search-title";
     private static final String COMMAND_SEARCH_DATE = "search-date";
     private static final String COMMAND_EXIT = "bye";
+
+    private static final List<String> VALID_COMMAND_LIST = List.of(COMMAND_LIST, COMMAND_TODO,
+            COMMAND_DEADLINE, COMMAND_EVENT, COMMAND_DELETE_TASK, COMMAND_MARK_TASK,
+            COMMAND_UNMARK_TASK, COMMAND_SEARCH_TITLE, COMMAND_EXIT);
 
     private static final String AUTOFILL_SECONDS = ":00";
 
@@ -63,10 +69,6 @@ public class Parser {
     public static final String DATE_FORMAT_REGEX = "\\d{4}-\\d{2}-\\d{2}";
     public static final DateTimeFormatter DATE_DECODE_FORMATTER =
             DateTimeFormatter.ofPattern("MMM dd YYYY");
-
-    private static final List<String> VALID_COMMAND_LIST = List.of(COMMAND_LIST, COMMAND_TODO,
-            COMMAND_DEADLINE, COMMAND_EVENT, COMMAND_DELETE_TASK, COMMAND_MARK_TASK,
-            COMMAND_UNMARK_TASK, COMMAND_SEARCH_DATE, COMMAND_EXIT);
 
     private static final List<String[]> parseUserInput(String input) {
         String[] inputs = input.split(DEFAULT_DELIMITER);
@@ -98,6 +100,8 @@ public class Parser {
             return new MarkTaskCommand(taskManager, args);
         case COMMAND_UNMARK_TASK:
             return new UnmarkTaskCommand(taskManager, args);
+        case COMMAND_SEARCH_TITLE:
+            return new GetTaskWithTitle(taskManager, args);
         case COMMAND_SEARCH_DATE:
             return new GetTaskWithDate(taskManager, args);
         default:
