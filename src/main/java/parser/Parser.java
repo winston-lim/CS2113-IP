@@ -54,6 +54,13 @@ public class Parser {
             List.of(COMMAND_LIST, COMMAND_TODO, COMMAND_DEADLINE, COMMAND_EVENT,
                     COMMAND_DELETE_TASK, COMMAND_MARK_TASK, COMMAND_UNMARK_TASK, COMMAND_EXIT);
 
+
+    /**
+     * Parses a line of user input into a usable form.
+     * 
+     * @param input a single line of user input.
+     * @return A list of String[] where first index is command and second is arguments.
+     */
     private static final List<String[]> parseUserInput(String input) {
         String[] inputs = input.split(DEFAULT_DELIMITER);
         String[] command = Arrays.copyOfRange(inputs, COMMAND_INDEX, COMMAND_INDEX + 1);
@@ -61,6 +68,17 @@ public class Parser {
         return List.of(command, args);
     }
 
+
+    /**
+     * Creaetes a specific command that represents what the user wants to do.
+     * 
+     * @param taskManager a manager containing a list of all recorded tasks
+     * @param input a single line of user input
+     * @return Command
+     * @throws CommandNotFoundException thrown when a given command does not exist
+     * @throws InsufficentArgumentsException thrown when a given command does not have enough
+     *         arguments to run
+     */
     public static final Command createCommand(TaskManager taskManager, String input)
             throws CommandNotFoundException, InsufficentArgumentsException {
         String command = getCommand(input);
@@ -89,14 +107,35 @@ public class Parser {
         }
     }
 
+
+    /**
+     * Gets the first word from user input, which is the command.
+     * 
+     * @param input a single line of user input
+     * @return String
+     */
     public static final String getCommand(String input) {
         return parseUserInput(input).get(COMMAND_INDEX)[COMMAND_INDEX];
     }
 
+
+    /**
+     * Gets all subsequent words from user input, which are the arguments.
+     * 
+     * @param input a single line of user input
+     * @return String[] the arguments for a command
+     */
     public static final String[] getArgs(String input) {
         return parseUserInput(input).get(ARGS_INDEX);
     }
 
+
+    /**
+     * Converts a task to a string of a specific format for saving to local storage.
+     * 
+     * @param task the target task to be converted to a string.
+     * @return String
+     */
     public static final String stringifyTask(Task task) {
         String taskType = task.getTaskType();
         boolean taskStatus = task.getStatus();
@@ -113,7 +152,7 @@ public class Parser {
     }
 
     /**
-     * Saves all tasks to data file by overwriting all its contents.
+     * Converts a list of tasks to a specific format for saving to local storage.
      * 
      * @param tasks A list of Task
      */
@@ -125,6 +164,14 @@ public class Parser {
         return fileContent;
     }
 
+
+    /**
+     * Given a line from local storage, returns a Task that is constructed from it.
+     * 
+     * @param data a single line from local storage
+     * @return Task
+     * @throws InvalidFileDataException thrown when the data is not of the correct format
+     */
     public static final Task parseDataToTask(String data) throws InvalidFileDataException {
         try {
             String taskType = data.substring(TASK_TYPE_INDEX, TASK_TYPE_INDEX + 1);

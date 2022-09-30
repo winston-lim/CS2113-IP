@@ -60,12 +60,19 @@ public class TaskManager implements TaskManagerInterface {
         }
     }
 
+
+    /**
+     * Getter method for recorded tasks.
+     * 
+     * @return a list of tasks.
+     */
     public List<Task> getRecordedTasks() {
         return this.recordedTasks;
     }
 
     /**
-     * Lists all recorded tasks.
+     * Method used by 'list' command to print all information about recorded tasks. Lists all
+     * recorded tasks.
      */
     @Override
     public final void listTasks() {
@@ -81,7 +88,7 @@ public class TaskManager implements TaskManagerInterface {
     }
 
     /**
-     * Creates a new task.
+     * Creates a new task and adds it to both local storage and memory.
      * 
      * @param task a Task to be added
      */
@@ -98,7 +105,7 @@ public class TaskManager implements TaskManagerInterface {
     }
 
     /**
-     * Removes a task if it exists.
+     * Removes a task if it exists from both local storage and memory.
      * 
      * @param id an integer specifying task to be deleted
      */
@@ -116,7 +123,7 @@ public class TaskManager implements TaskManagerInterface {
     }
 
     /**
-     * Marks a task as done by calling Task.setIsDone.
+     * Marks a task as done by calling Task.setIsDone and updates in both local storage and memory.
      * 
      * @param id an integer specifying task to be marked as done
      */
@@ -141,7 +148,8 @@ public class TaskManager implements TaskManagerInterface {
     }
 
     /**
-     * Marks a task as not done by calling Task.setIsDone.
+     * Marks a task as not done by calling Task.setIsDone and updates in both local storage and
+     * memory.
      * 
      * @param id an integer specifying task to be marked as not done
      */
@@ -165,8 +173,16 @@ public class TaskManager implements TaskManagerInterface {
         saveTasks(recordedTasks);
     }
 
+
+    /**
+     * Overwrites given file with updated data - is mainly used for persisting local updates to
+     * storage.
+     * 
+     * @param tasks a list of tasks with the latest update
+     * @throws IOException thrown when saving to local storage fails
+     */
     private void saveTasks(List<Task> tasks) throws IOException {
-        String fileContent = Parser.stringifyTasks(this.recordedTasks);
+        String fileContent = Parser.stringifyTasks(tasks);
         this.fileManager.writeToFile(fileContent);
     }
 }

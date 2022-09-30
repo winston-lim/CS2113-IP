@@ -37,18 +37,39 @@ public class Task implements TaskInterface {
         return this.title;
     }
 
+    /**
+     * Returns a title and possibly any local timing data of a task.
+     * 
+     * @return String
+     */
     public String getDescription() {
         return this.getTitle();
     }
 
+    /**
+     * Returns the type of the task, which is usually a single character surrounded by square
+     * brackets.
+     * 
+     * @return String
+     */
     public String getTaskType() {
         return "";
     }
 
+    /**
+     * Returns any local time related data, for this case it is a empty.
+     * 
+     * @return String
+     */
     public String getTaskTiming() {
         return "";
     }
 
+    /**
+     * Returns all known information about a task.
+     * 
+     * @return String
+     */
     public String getStatusDescription() {
         return getStatusIcon() + " " + getDescription();
     }

@@ -18,6 +18,14 @@ public class MarkTaskCommand extends Command {
         this.args = args;
     }
 
+
+    /**
+     * Marks a specified task as done, or throws an error if it does not exist.
+     * 
+     * @return boolean whether this command exits
+     * @throws IOException thrown when saving to local storage fails
+     * @throws TaskNotFoundException thrown when specified task does not exist
+     */
     public boolean executeCommand() throws IOException, TaskNotFoundException {
         this.taskManager.markTask(Integer.parseInt(args[DEFAULT_FIRST_INDEX]));
         return false;

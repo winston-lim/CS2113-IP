@@ -18,6 +18,15 @@ public class DeleteTaskCommand extends Command {
         this.args = args;
     }
 
+
+
+    /**
+     * Deletes a task of specified id, or throws an error if it does not exist.
+     * 
+     * @return boolean whether this action exists.
+     * @throws IOException thrown when saving to local storage fails
+     * @throws TaskNotFoundException thrown when specified task does not exist
+     */
     public boolean executeCommand() throws IOException, TaskNotFoundException {
         this.taskManager.deleteTask(Integer.parseInt(args[DEFAULT_FIRST_INDEX]));
         return false;

@@ -18,6 +18,12 @@ public class AddTodoCommand extends Command {
         this.taskManager = taskManager;
     }
 
+    /**
+     * Add a event of type todo to list of recorded tasks.
+     * 
+     * @return boolean whether this command exits
+     * @throws IOException thrown when saving to local storage fails
+     */
     public boolean executeCommand() throws IOException {
         String title = String.join(DEFAULT_DELIMITER, args);
         this.taskManager.addTask(new Todo(title));

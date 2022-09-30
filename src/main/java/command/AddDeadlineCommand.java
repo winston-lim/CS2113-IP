@@ -25,6 +25,13 @@ public class AddDeadlineCommand extends Command {
         this.taskManager = taskManager;
     }
 
+
+    /**
+     * Add a event of type deadline to list of recorded tasks.
+     * 
+     * @return boolean whether this command exits
+     * @throws IOException thrown when saving to local storage fails
+     */
     public boolean executeCommand() throws IOException {
         int dividerIndex = Arrays.asList(this.args).indexOf(DEADLINE_DIVIDER);
         String title = String.join(DEFAULT_DELIMITER,
