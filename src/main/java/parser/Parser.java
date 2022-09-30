@@ -32,6 +32,7 @@ public class Parser {
     private static final String DEFAULT_DELIMITER = " ";
     private static final int COMMAND_INDEX = 0;
     private static final int DEFAULT_FIRST_INDEX = 0;
+    private static final int DEFAULT_INDEX_INCREMENT = 1;
     private static final int ARGS_INDEX = 1;
 
     private static final String DATA_TOKEN_SEPARATOR = " | ";
@@ -242,11 +243,15 @@ public class Parser {
                 }
                 return new Deadline(taskTitle, LocalDate.parse(taskTiming), taskStatus);
             }
-            taskTiming += AUTOFILL_SECONDS;
-            if (!checkDurationFormat(taskTiming)) {
+            String[] taskTimings = taskTiming.split(DEFAULT_DELIMITER);
+            String startDateTime = taskTimings[DEFAULT_FIRST_INDEX] + AUTOFILL_SECONDS;
+            String endDateTime =
+                    taskTimings[DEFAULT_FIRST_INDEX + DEFAULT_INDEX_INCREMENT] + AUTOFILL_SECONDS;
+            if (!checkDurationFormat(startDateTime) || !checkDurationFormat(endDateTime)) {
                 throw new InvalidFileDataException();
             }
-            return new Event(taskTitle, LocalDateTime.parse(taskTiming), taskStatus);
+            return new Event(taskTitle, LocalDateTime.parse(startDateTime),
+                    LocalDateTime.parse(endDateTime), taskStatus);
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidFileDataException();
         }

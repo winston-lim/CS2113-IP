@@ -41,6 +41,8 @@ Example: `list`
 
 Example output:
 
+![list.png](list.png)
+
 ### Adding a Todo: `todo`
 
 Adds a todo task to the list of recorded tasks
@@ -50,6 +52,8 @@ Format: `todo [TITLE]`
 Example: `todo Move furniture`
 
 Example output:
+
+![todo.png](todo.png)
 
 ### Adding a Deadline: `deadline`
 
@@ -61,6 +65,8 @@ Example: `deadline apply for financial aid /by 2023-01-01`
 
 Example output:
 
+![deadline.png](deadline.png)
+
 ### Adding an Event: `event`
 
 Adds a event task to the list of recorded tasks
@@ -70,6 +76,8 @@ Format: `event [TITLE] /at [YYYY-MM-dd]T[HH:mm]`
 Example: `event countdown /at 2022-12-31T23:59`
 
 Example output:
+
+![event.png](event.png)
 
 ### Deleting a task: `delete`
 
@@ -81,6 +89,8 @@ Example: `delete 1`
 
 Example output:
 
+![delete.png](delete.png)
+
 ### Mark a task as done: `mark`
 
 Marks a task of specified id as done or outputs an error if the task does not exist
@@ -90,6 +100,8 @@ Format: `mark [TASK_ID]`
 Example `mark 1`
 
 Example output:
+
+![mark.png](mark.png)
 
 ### Mark a task as not done: `unmark`
 
@@ -101,6 +113,8 @@ Example: `umark 1`
 
 Example output:
 
+![unmark.png](unmark.png)
+
 ### Searching for a task by date: `search-date`
 
 Queries existing tasks and return tasks with same date as specified
@@ -110,6 +124,8 @@ Format: `search-date [YYYY-MMM-dd]`
 Example: `search-date 2022-12-31`
 
 Example output:
+
+![search-date.png](search-date.png)
 
 ### Searching for a task by title: `search-title`
 
@@ -121,9 +137,13 @@ Example `search-title book`
 
 Example output:
 
+![search-title.png](search-title.png)
+
 ### Exiting the program: `bye`
 
 Exits the program
+
+![bye.png](bye.png)
 
 ### Saving the data
 
@@ -132,6 +152,9 @@ All changes to the recorded tasks are automatically saved in the hard disk after
 ### Accessing the saved data
 
 For simplicity, the data is simply stored as a `.txt` file, with a specific format
+
 Format: `[TASK_TYPE] | [TASK_STATUS] | [TASK_TITLE] | [TASK_TIMING]`
+
 Note: Task timing is optional
+
 Example: `E | 0 | winston attend CS2113 lecture | Friday 16 Sep 2022 from 4 to 6pm`

@@ -20,6 +20,7 @@ event apply for finanial aid /by 2023-05-05
 event apply for finanial aid /at 5 May 2023 14:00
 event apply for finanial aid /at 05-05-2023 23:00
 event staycation /at 2023-01-01T03:59
+event staycation /at 2023-01-01T03:59 2023-01-02T11:30
 list
 mark
 mark 

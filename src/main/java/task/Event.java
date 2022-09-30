@@ -10,20 +10,25 @@ public class Event extends Task {
     private static final String TASK_TYPE = "E";
 
     // Properties
-    private final LocalDateTime duration;
+    private final LocalDateTime startDateTime;
+    private final LocalDateTime endDateTime;
 
-    public Event(String description, LocalDateTime duration) {
+    public Event(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description);
-        this.duration = duration;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
     }
 
-    public Event(String description, LocalDateTime duration, boolean isDone) {
+    public Event(String description, LocalDateTime startDateTime, LocalDateTime endDateTime,
+            boolean isDone) {
         super(description, isDone);
-        this.duration = duration;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
     }
 
     public boolean equalDate(LocalDate date) {
-        return this.duration.toLocalDate().equals(date);
+        return this.startDateTime.toLocalDate().equals(date)
+                || this.endDateTime.toLocalDate().equals(date);
     }
 
     /**
@@ -44,7 +49,7 @@ public class Event extends Task {
      */
     @Override
     public String getTaskTiming() {
-        return this.duration.toString();
+        return this.startDateTime.toString() + " " + this.endDateTime.toString();
     }
 
     /**
@@ -54,7 +59,8 @@ public class Event extends Task {
      */
     @Override
     public String getDescription() {
-        return this.title + " (at: " + this.duration.format(Parser.DATETIME_DECODE_FORMATTER) + ")";
+        return this.title + " (at: " + this.startDateTime.format(Parser.DATETIME_DECODE_FORMATTER)
+                + " - " + this.endDateTime.format(Parser.DATETIME_DECODE_FORMATTER) + ")";
     }
 
     /**

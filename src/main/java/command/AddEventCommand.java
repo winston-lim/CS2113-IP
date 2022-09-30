@@ -51,19 +51,35 @@ public class AddEventCommand extends Command {
      */
     public boolean executeCommand()
             throws IOException, InsufficientArgumentsException, InvalidTimeFormatException {
+        if (this.args.length < 3) {
+            throw new InsufficientArgumentsException();
+        }
         int dividerIndex = Arrays.asList(args).indexOf(DURATION_DIVIDER);
         String title = String.join(DEFAULT_DELIMITER,
                 Arrays.copyOfRange(args, DEFAULT_FIRST_INDEX, dividerIndex));
-        String duration = String.join(DEFAULT_DELIMITER,
+        String otherArguments = String.join(DEFAULT_DELIMITER,
                 Arrays.copyOfRange(args, dividerIndex + DEFAULT_INDEX_INCREMENT, args.length));
-        if (title.isEmpty() || duration.isEmpty()) {
+        String[] times = otherArguments.split(DEFAULT_DELIMITER);
+        if (times.length < 2 || title.isEmpty()) {
             throw new InsufficientArgumentsException();
         }
-        duration = duration + AUTOFILL_SECONDS;
-        if (!Parser.checkDurationFormat(duration)) {
+
+        String startDateTime = times[DEFAULT_FIRST_INDEX];
+        String endDateTime = times[DEFAULT_FIRST_INDEX + DEFAULT_INDEX_INCREMENT];
+
+        if (startDateTime.isEmpty() || endDateTime.isEmpty()) {
+            throw new InsufficientArgumentsException();
+        }
+
+        startDateTime += AUTOFILL_SECONDS;
+        endDateTime += AUTOFILL_SECONDS;
+
+        if (!Parser.checkDurationFormat(startDateTime)
+                || !Parser.checkDurationFormat(endDateTime)) {
             throw new InvalidTimeFormatException();
         }
-        taskManager.addTask(new Event(title, LocalDateTime.parse(duration)));
+        taskManager.addTask(new Event(title, LocalDateTime.parse(startDateTime),
+                LocalDateTime.parse(endDateTime)));
         return false;
     }
 }

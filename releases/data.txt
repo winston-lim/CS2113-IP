@@ -1,8 +1,10 @@
 T | 0 | go to the gym
 E | 0 | countdown | 2022-12-31T23:59 2023-01-01T00:00
 D | 1 | return book | 2022-06-01
-E | 0 | movie marathon | 2022-09-29T14:30 2022-09-30T06:30
-T | 1 | join sports club
+T | 0 | join sports club
 D | 1 | apply for internship | 2022-06-01
 E | 0 | breakfast with master | 2022-11-11T09:30 2022-11-12T11:30
 T | 1 | join computing club
+T | 0 | return cs2113 book
+D | 0 | apply for FA | 2023-05-05
+E | 1 | apply for internship | 2023-01-01T09:00 2023-03-30T23:59
