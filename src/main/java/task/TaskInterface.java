@@ -1,5 +1,7 @@
 package task;
 
+import java.time.LocalDate;
+
 interface TaskInterface {
     public boolean getStatus();
 
@@ -16,4 +18,6 @@ interface TaskInterface {
     public String getDescription();
 
     public String getStatusDescription();
+
+    public boolean equalDate(LocalDate date);
 }
