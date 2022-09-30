@@ -16,6 +16,7 @@ import user.UserInteraction;
 public class TaskManager implements TaskManagerInterface {
     private static final String FILE_PATH = "./data.txt";
 
+    protected static final String QUERY_TASK_START_TEXT = "Search results:";
     protected static final String LIST_TASK_START_TEXT = "Here are the tasks in your list:";
     protected static final String ADD_TASK_START_TEXT = "Got it! Added this task: ";
     protected static final String DELETE_TASK_START_TEXT = "Noted. I've removed this task:";
@@ -24,6 +25,7 @@ public class TaskManager implements TaskManagerInterface {
     protected static final String UNMARK_TASK_START_TEXT = "I've unmarked this task: ";
     protected static final String UNMARK_TASK_ERROR_TEXT = "Task has not been marked";
     protected static final String COMMAND_END_TEXT = "Remaining number of tasks: ";
+    protected static final String QUERY_TASK_END_TEXT = "Number of results:";
 
     protected static final String DEFAULT_INDENTATION = "    ";
     protected static final String DEFAULT_DELIMITER = " ";
@@ -77,6 +79,18 @@ public class TaskManager implements TaskManagerInterface {
         }
 
         messages.add(COMMAND_END_TEXT + recordedTasks.size());
+        UserInteraction.printNormalResponse(messages.toArray(new String[0]));
+    }
+
+    public final void listTasks(List<Task> tasks) {
+        List<String> messages = new ArrayList<String>();
+        messages.add(QUERY_TASK_START_TEXT);
+
+        for (int i = 1; i <= tasks.size(); ++i) {
+            messages.add(tasks.get(i - 1).getStatusDescription());
+        }
+
+        messages.add(QUERY_TASK_END_TEXT + tasks.size());
         UserInteraction.printNormalResponse(messages.toArray(new String[0]));
     }
 
@@ -168,5 +182,15 @@ public class TaskManager implements TaskManagerInterface {
     private void saveTasks(List<Task> tasks) throws IOException {
         String fileContent = Parser.stringifyTasks(this.recordedTasks);
         this.fileManager.writeToFile(fileContent);
+    }
+
+    public final List<Task> searchByTitle(String query) {
+        List<Task> result = new ArrayList<Task>();
+        for (Task task : recordedTasks) {
+            if (task.getTitle().contains(query)) {
+                result.add(task);
+            }
+        }
+        return result;
     }
 }
