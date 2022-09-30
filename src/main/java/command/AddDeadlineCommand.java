@@ -1,8 +1,11 @@
 package command;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import exception.InsufficentArgumentsException;
+import exception.InvalidTimeFormatException;
+import parser.Parser;
 import task.Deadline;
 import task.TaskManager;
 
@@ -27,18 +30,27 @@ public class AddDeadlineCommand extends Command {
 
 
     /**
-     * Add a event of type deadline to list of recorded tasks.
+     * Add a task of type deadline to list of recorded tasks.
      * 
      * @return boolean whether this command exits
      * @throws IOException thrown when saving to local storage fails
+     * @throws InsufficentArgumentsException thrown when given arguments are empty strings
+     * @throws InvalidTimeFormatException thrown when given timing is of the wrong format
      */
-    public boolean executeCommand() throws IOException {
+    public boolean executeCommand()
+            throws IOException, InsufficentArgumentsException, InvalidTimeFormatException {
         int dividerIndex = Arrays.asList(this.args).indexOf(DEADLINE_DIVIDER);
         String title = String.join(DEFAULT_DELIMITER,
                 Arrays.copyOfRange(args, DEFAULT_FIRST_INDEX, dividerIndex));
         String deadline = String.join(DEFAULT_DELIMITER,
                 Arrays.copyOfRange(args, dividerIndex + DEFAULT_INDEX_INCREMENT, args.length));
-        taskManager.addTask(new Deadline(title, deadline));
+        if (title.isEmpty() || deadline.isEmpty()) {
+            throw new InsufficentArgumentsException();
+        }
+        if (!Parser.checkDeadlineFormat(deadline)) {
+            throw new InvalidTimeFormatException();
+        }
+        taskManager.addTask(new Deadline(title, LocalDate.parse(deadline)));
         return false;
     }
 }

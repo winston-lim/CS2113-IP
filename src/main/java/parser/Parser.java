@@ -1,5 +1,8 @@
 package parser;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import command.AddDeadlineCommand;
@@ -8,6 +11,8 @@ import command.AddTodoCommand;
 import command.Command;
 import command.DeleteTaskCommand;
 import command.ExitCommand;
+import command.GetTaskWithTitle;
+import command.GetTaskWithDate;
 import command.ListTasksCommand;
 import command.MarkTaskCommand;
 import command.UnmarkTaskCommand;
@@ -48,11 +53,22 @@ public class Parser {
     private static final String COMMAND_DELETE_TASK = "delete";
     private static final String COMMAND_MARK_TASK = "mark";
     private static final String COMMAND_UNMARK_TASK = "unmark";
+    private static final String COMMAND_SEARCH_TITLE = "search-title";
+    private static final String COMMAND_SEARCH_DATE = "search-date";
     private static final String COMMAND_EXIT = "bye";
 
-    private static final List<String> VALID_COMMAND_LIST =
-            List.of(COMMAND_LIST, COMMAND_TODO, COMMAND_DEADLINE, COMMAND_EVENT,
-                    COMMAND_DELETE_TASK, COMMAND_MARK_TASK, COMMAND_UNMARK_TASK, COMMAND_EXIT);
+    private static final List<String> VALID_COMMAND_LIST = List.of(COMMAND_LIST, COMMAND_TODO,
+            COMMAND_DEADLINE, COMMAND_EVENT, COMMAND_DELETE_TASK, COMMAND_MARK_TASK,
+            COMMAND_UNMARK_TASK, COMMAND_SEARCH_TITLE, COMMAND_EXIT);
+
+    private static final String AUTOFILL_SECONDS = ":00";
+
+    public static final String DATETIME_FORMAT_REGEX = "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}";
+    public static final DateTimeFormatter DATETIME_DECODE_FORMATTER =
+            DateTimeFormatter.ofPattern("MMM dd YYYY HH:mm a");
+    public static final String DATE_FORMAT_REGEX = "\\d{4}-\\d{2}-\\d{2}";
+    public static final DateTimeFormatter DATE_DECODE_FORMATTER =
+            DateTimeFormatter.ofPattern("MMM dd YYYY");
 
 
     /**
@@ -102,6 +118,10 @@ public class Parser {
             return new MarkTaskCommand(taskManager, args);
         case COMMAND_UNMARK_TASK:
             return new UnmarkTaskCommand(taskManager, args);
+        case COMMAND_SEARCH_TITLE:
+            return new GetTaskWithTitle(taskManager, args);
+        case COMMAND_SEARCH_DATE:
+            return new GetTaskWithDate(taskManager, args);
         default:
             return new ExitCommand();
         }
@@ -130,10 +150,32 @@ public class Parser {
     }
 
 
+
+    /**
+     * Checks a given deadline for the format required for LocalDate.
+     * 
+     * @param deadline the deadline to check with
+     * @return boolean
+     */
+    public static final boolean checkDeadlineFormat(String deadline) {
+        return deadline.matches(DATE_FORMAT_REGEX);
+    }
+
+
+    /**
+     * Checks a given duration for the format required for LocalDateTime.
+     * 
+     * @param duration the duration to check with
+     * @return boolean
+     */
+    public static final boolean checkDurationFormat(String duration) {
+        return duration.matches(DATETIME_FORMAT_REGEX);
+    }
+
     /**
      * Converts a task to a string of a specific format for saving to local storage.
      * 
-     * @param task the target task to be converted to a string.
+     * @param task the target task to be converted to a string
      * @return String
      */
     public static final String stringifyTask(Task task) {
@@ -199,9 +241,16 @@ public class Parser {
 
             String taskTiming = otherData[TASK_TIMING_INDEX];
             if (taskType.equals(DEADLINE_TASK_TYPE)) {
-                return new Deadline(taskTitle, taskTiming, taskStatus);
+                if (!checkDeadlineFormat(taskTiming)) {
+                    throw new InvalidFileDataException();
+                }
+                return new Deadline(taskTitle, LocalDate.parse(taskTiming), taskStatus);
             }
-            return new Event(taskTitle, taskTiming, taskStatus);
+            taskTiming += AUTOFILL_SECONDS;
+            if (!checkDurationFormat(taskTiming)) {
+                throw new InvalidFileDataException();
+            }
+            return new Event(taskTitle, LocalDateTime.parse(taskTiming), taskStatus);
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidFileDataException();
         }

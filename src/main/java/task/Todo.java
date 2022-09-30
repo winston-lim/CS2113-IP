@@ -1,5 +1,7 @@
 package task;
 
+import java.time.LocalDate;
+
 public class Todo extends Task {
     private static final String TODO_PREFIX = "[T] ";
     private static final String TASK_TYPE = "T";
@@ -10,6 +12,27 @@ public class Todo extends Task {
 
     public Todo(String description, boolean isDone) {
         super(description, isDone);
+    }
+
+
+    /**
+     * Checks if the date of task is equal to a given date.
+     * 
+     * @param date
+     * @return boolean
+     */
+    public boolean equalDate(LocalDate date) {
+        return true;
+    }
+
+
+    /**
+     * Returns a string representation of a task's timing.
+     * 
+     * @return String
+     */
+    public String getTaskTiming() {
+        return "";
     }
 
     /**
