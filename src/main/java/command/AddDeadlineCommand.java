@@ -28,6 +28,15 @@ public class AddDeadlineCommand extends Command {
         this.taskManager = taskManager;
     }
 
+
+    /**
+     * Add a task of type deadline to list of recorded tasks.
+     * 
+     * @return boolean whether this command exits
+     * @throws IOException thrown when saving to local storage fails
+     * @throws InsufficentArgumentsException thrown when given arguments are empty strings
+     * @throws InvalidTimeFormatException thrown when given timing is of the wrong format
+     */
     public boolean executeCommand()
             throws IOException, InsufficentArgumentsException, InvalidTimeFormatException {
         int dividerIndex = Arrays.asList(this.args).indexOf(DEADLINE_DIVIDER);

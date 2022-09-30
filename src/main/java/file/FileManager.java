@@ -12,10 +12,23 @@ public class FileManager implements FileManagerInterface {
         this.file = new File(filePath);
     }
 
+
+    /**
+     * Returns target file, which may not exist.
+     * 
+     * @return File
+     */
     public File readFromFile() {
         return this.file;
     }
 
+
+    /**
+     * Writes to target file, which will overwrite its contents.
+     * 
+     * @param fileContent the new contents used to overwrite.
+     * @throws IOException thrown when saving to local storage fails
+     */
     public void writeToFile(String fileContent) throws IOException {
         FileWriter fw = new FileWriter(this.file);
         fw.write(fileContent);

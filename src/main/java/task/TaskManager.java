@@ -19,7 +19,6 @@ public class TaskManager implements TaskManagerInterface {
 
     protected static final String QUERY_TASK_START_TEXT = "Search results:";
     protected static final String LIST_TASK_START_TEXT = "Here are the tasks in your list:";
-    protected static final String QUERY_TASK_START_TEXT = "Search results:";
     protected static final String ADD_TASK_START_TEXT = "Got it! Added this task: ";
     protected static final String DELETE_TASK_START_TEXT = "Noted. I've removed this task:";
     protected static final String MARK_TASK_START_TEXT = "I've marked this task: ";
@@ -37,8 +36,6 @@ public class TaskManager implements TaskManagerInterface {
     private static final int MINIMUM_TASK_NUMBER = 1;
 
     private static final String TODO_TASK_TYPE = "T";
-    private static final String DEADLINE_TASK_TYPE = "D";
-    private static final String EVENT_TASK_TYPE = "E";
 
     private final List<Task> recordedTasks;
     private final FileManager fileManager;
@@ -68,12 +65,19 @@ public class TaskManager implements TaskManagerInterface {
         }
     }
 
+
+    /**
+     * Getter method for recorded tasks.
+     * 
+     * @return a list of tasks.
+     */
     public List<Task> getRecordedTasks() {
         return this.recordedTasks;
     }
 
     /**
-     * Lists all recorded tasks.
+     * Method used by 'list' command to print all information about recorded tasks. Lists all
+     * recorded tasks.
      */
     @Override
     public final void listTasks() {
@@ -88,6 +92,12 @@ public class TaskManager implements TaskManagerInterface {
         UserInteraction.printNormalResponse(messages.toArray(new String[0]));
     }
 
+
+    /**
+     * An overloaded method for the above - it prints all information about a given list of tasks.
+     * 
+     * @param tasks the list of tasks to print information about
+     */
     public final void listTasks(List<Task> tasks) {
         List<String> messages = new ArrayList<String>();
         messages.add(QUERY_TASK_START_TEXT);
@@ -101,7 +111,7 @@ public class TaskManager implements TaskManagerInterface {
     }
 
     /**
-     * Creates a new task.
+     * Creates a new task and adds it to both local storage and memory.
      * 
      * @param task a Task to be added
      */
@@ -118,7 +128,7 @@ public class TaskManager implements TaskManagerInterface {
     }
 
     /**
-     * Removes a task if it exists.
+     * Removes a task if it exists from both local storage and memory.
      * 
      * @param id an integer specifying task to be deleted
      */
@@ -136,7 +146,7 @@ public class TaskManager implements TaskManagerInterface {
     }
 
     /**
-     * Marks a task as done by calling Task.setIsDone.
+     * Marks a task as done by calling Task.setIsDone and updates in both local storage and memory.
      * 
      * @param id an integer specifying task to be marked as done
      */
@@ -161,7 +171,8 @@ public class TaskManager implements TaskManagerInterface {
     }
 
     /**
-     * Marks a task as not done by calling Task.setIsDone.
+     * Marks a task as not done by calling Task.setIsDone and updates in both local storage and
+     * memory.
      * 
      * @param id an integer specifying task to be marked as not done
      */
@@ -185,6 +196,13 @@ public class TaskManager implements TaskManagerInterface {
         saveTasks(recordedTasks);
     }
 
+
+    /**
+     * Searches existing records with dates equal to a given date.
+     * 
+     * @param date the date to search with
+     * @return List<Task>
+     */
     public final List<Task> searchByDate(LocalDate date) {
         List<Task> result = new ArrayList<Task>();
         for (Task task : recordedTasks) {
@@ -198,11 +216,25 @@ public class TaskManager implements TaskManagerInterface {
         return result;
     }
 
+    /**
+     * Overwrites given file with updated data - is mainly used for persisting local updates to
+     * storage.
+     * 
+     * @param tasks a list of tasks with the latest update
+     * @throws IOException thrown when saving to local storage fails
+     */
     private void saveTasks(List<Task> tasks) throws IOException {
-        String fileContent = Parser.stringifyTasks(this.recordedTasks);
+        String fileContent = Parser.stringifyTasks(tasks);
         this.fileManager.writeToFile(fileContent);
     }
 
+
+    /**
+     * Searches existing records for titles containing a given keyword.
+     * 
+     * @param query the keyword to query with
+     * @return List<Task>
+     */
     public final List<Task> searchByTitle(String query) {
         List<Task> result = new ArrayList<Task>();
         for (Task task : recordedTasks) {

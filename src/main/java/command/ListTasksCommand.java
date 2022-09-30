@@ -12,6 +12,12 @@ public class ListTasksCommand extends Command {
         this.taskManager = taskManager;
     }
 
+
+    /**
+     * Lists all recorded tasks.
+     * 
+     * @return boolean whether this command exits
+     */
     public boolean executeCommand() {
         taskManager.listTasks();
         return false;

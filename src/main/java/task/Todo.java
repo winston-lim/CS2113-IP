@@ -14,19 +14,43 @@ public class Todo extends Task {
         super(description, isDone);
     }
 
+
+    /**
+     * Checks if the date of task is equal to a given date.
+     * 
+     * @param date
+     * @return boolean
+     */
     public boolean equalDate(LocalDate date) {
         return true;
     }
 
+
+    /**
+     * Returns a string representation of a task's timing.
+     * 
+     * @return String
+     */
     public String getTaskTiming() {
         return "";
     }
 
+    /**
+     * Returns the type of the task, which is usually a single character surrounded by square
+     * brackets.
+     * 
+     * @return String
+     */
     @Override
     public String getTaskType() {
         return TASK_TYPE;
     }
 
+    /**
+     * Returns all known information about a task.
+     * 
+     * @return String
+     */
     @Override
     public final String getStatusDescription() {
         return TODO_PREFIX + this.getStatusIcon() + " " + this.getDescription();
