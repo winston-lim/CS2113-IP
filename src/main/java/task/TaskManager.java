@@ -3,6 +3,7 @@ package task;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,6 +19,7 @@ public class TaskManager implements TaskManagerInterface {
 
     protected static final String QUERY_TASK_START_TEXT = "Search results:";
     protected static final String LIST_TASK_START_TEXT = "Here are the tasks in your list:";
+    protected static final String QUERY_TASK_START_TEXT = "Search results:";
     protected static final String ADD_TASK_START_TEXT = "Got it! Added this task: ";
     protected static final String DELETE_TASK_START_TEXT = "Noted. I've removed this task:";
     protected static final String MARK_TASK_START_TEXT = "I've marked this task: ";
@@ -33,6 +35,10 @@ public class TaskManager implements TaskManagerInterface {
 
     private static final int DIFF_INDEX_FROM_ID = 1;
     private static final int MINIMUM_TASK_NUMBER = 1;
+
+    private static final String TODO_TASK_TYPE = "T";
+    private static final String DEADLINE_TASK_TYPE = "D";
+    private static final String EVENT_TASK_TYPE = "E";
 
     private final List<Task> recordedTasks;
     private final FileManager fileManager;
@@ -177,6 +183,19 @@ public class TaskManager implements TaskManagerInterface {
                 recordedTasks.get(taskIndex).getStatusDescription());
         // persist updates to local storage
         saveTasks(recordedTasks);
+    }
+
+    public final List<Task> searchByDate(LocalDate date) {
+        List<Task> result = new ArrayList<Task>();
+        for (Task task : recordedTasks) {
+            if (task.getTaskType().equals(TODO_TASK_TYPE)) {
+                continue;
+            }
+            if (task.equalDate(date)) {
+                result.add(task);
+            }
+        }
+        return result;
     }
 
     private void saveTasks(List<Task> tasks) throws IOException {

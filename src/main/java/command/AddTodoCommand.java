@@ -18,8 +18,11 @@ public class AddTodoCommand extends Command {
         this.taskManager = taskManager;
     }
 
-    public boolean executeCommand() throws IOException {
+    public boolean executeCommand() throws IOException, InsufficentArgumentsException {
         String title = String.join(DEFAULT_DELIMITER, args);
+        if (title.isEmpty()) {
+            throw new InsufficentArgumentsException();
+        }
         this.taskManager.addTask(new Todo(title));
         return false;
     }

@@ -32,6 +32,9 @@ public class ExceptionManager {
         if (e instanceof InvalidFileDataException) {
             errorMessage = "invalid file data";
         }
+        if (e instanceof InvalidTimeFormatException) {
+            errorMessage = "invalid time format";
+        }
         UserInteraction.printErrorResponse(errorMessage);
     }
 }
