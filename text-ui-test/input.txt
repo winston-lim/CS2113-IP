@@ -1,19 +1,67 @@
+
+,
+-1
 list
-todo return cs2113 textbook
+todo 
+todo return cs2113 reference book
 list
-mark -1
+deadline
+deadline title
+deadline title /at
+deadline apply for finanial aid /at 2023-05-05
+deadline apply for finanial aid /by 5 May 2023
+deadline apply for finanial aid /by 05-05-2023
+deadline apply for finanial aid /by 2023-05-05
+list
+event
+event title
+event title /at
+event apply for finanial aid /by 2023-05-05
+event apply for finanial aid /at 5 May 2023 14:00
+event apply for finanial aid /at 05-05-2023 23:00
+event staycation /at 2023-01-01T03:59
+list
+mark
+mark 
+unmark
+unmark 
+mark -999
+unmark -1
 mark 0
-mark 6
-mark 5
-mark 5
-unmark 5
-deadline borrow cs2102 textbook /by 9 November 2022
+unmark 0
+mark 12
+unmark 999
+mark 11
+mark 11
+unmark 10
+unmark 11
 list
-unmark 6
-mark 6
-event attend TIPS closing ceremoney /at 25th November 2-4pm
+delete
+delete 
+delete -999
+delete 0
+delete 12
+delete 4
 list
-mark 7
-unmark 7
+mark 10
+search-title
+search-title 
+search-title ungeg
+search-title book
+search-title club
+search-title return
+search-title apply
+search-date
+search-date 
+search-date bad
+search-date 23 August 2022
+search-date 22-08-2022
+search-date 2022-12-31
+mark 2
+search-date 2022-12-31
+list
+search-date 2023-01-01
+unmark 10
+search-date 2023-01-01
 list
 bye

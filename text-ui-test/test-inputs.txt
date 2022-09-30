@@ -1,4 +1,8 @@
-T | 1 | read book
-D | 0 | return book | June 6th
-E | 0 | project meeting | Aug 6th 2-4pm
+T | 0 | go to the gym
+E | 0 | countdown | 2022-12-31T23:59
+D | 1 | return book | 2022-06-01
+E | 0 | project meeting | 2022-09-29T14:30
 T | 1 | join sports club
+D | 1 | apply for internship | 2022-06-01
+E | 0 | breakfast with master | 2022-11-11T09:30
+T | 1 | join computing club

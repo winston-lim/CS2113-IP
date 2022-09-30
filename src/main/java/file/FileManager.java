@@ -6,6 +6,7 @@ import java.io.IOException;
 
 
 public class FileManager implements FileManagerInterface {
+    // Properties
     private final File file;
 
     public FileManager(String filePath) {

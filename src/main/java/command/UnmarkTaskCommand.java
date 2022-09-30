@@ -1,18 +1,27 @@
 package command;
 
 import java.io.IOException;
-import exception.InsufficentArgumentsException;
+import exception.InsufficientArgumentsException;
 import exception.TaskNotFoundException;
 import task.TaskManager;
 
 public class UnmarkTaskCommand extends Command {
+    // Properties
     private final String[] args;
     private final TaskManager taskManager;
 
+    /**
+     * Default constructor method.
+     * 
+     * @param taskManager used for delegating any task related operations
+     * @param args arguments supplied for this command
+     * @throws InsufficientArgumentsException thrown when no arguments where supplied for this
+     *         command
+     */
     public UnmarkTaskCommand(TaskManager taskManager, String[] args)
-            throws InsufficentArgumentsException {
+            throws InsufficientArgumentsException {
         if (args.length == EMPTY_ARRAY_SIZE) {
-            throw new InsufficentArgumentsException();
+            throw new InsufficientArgumentsException();
         }
         this.taskManager = taskManager;
         this.args = args;

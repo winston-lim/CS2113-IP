@@ -1,11 +1,10 @@
 package command;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import task.TaskManager;
-import user.UserInteraction;
 
 public class ListTasksCommand extends Command {
+    // Properties
     private final TaskManager taskManager;
 
     public ListTasksCommand(TaskManager taskManager) {

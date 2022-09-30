@@ -5,9 +5,11 @@ import java.time.LocalDateTime;
 import parser.Parser;
 
 public class Event extends Task {
+    // Constants
     private static final String EVENT_PREFIX = "[E] ";
     private static final String TASK_TYPE = "E";
 
+    // Properties
     private final LocalDateTime duration;
 
     public Event(String description, LocalDateTime duration) {
@@ -32,7 +34,6 @@ public class Event extends Task {
      */
     @Override
     public String getTaskType() {
-        System.out.println(getTaskTiming());
         return TASK_TYPE;
     }
 

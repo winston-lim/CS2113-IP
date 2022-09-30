@@ -7,26 +7,142 @@ Hello! I'm Duke
 What can I do for you?
 ------------------------------
     ------------------------------
+    Error: invalid command
+    ------------------------------
+    ------------------------------
+    Error: invalid command
+    ------------------------------
+    ------------------------------
+    Error: invalid command
+    ------------------------------
+    ------------------------------
     Here are the tasks in your list:
-    1. [T] [X] read book
-    2. [D] [ ] return book (by: June 6th)
-    3. [E] [ ] project meeting (at: Aug 6th 2-4pm)
-    4. [T] [X] join sports club
-    Remaining number of tasks: 4
+    1. [T] [ ] go to the gym
+    2. [E] [ ] countdown (at: Dec 31 2022 23:59 pm)
+    3. [D] [X] return book (by: Jun 01 2022)
+    4. [E] [ ] project meeting (at: Sep 29 2022 14:30 pm)
+    5. [T] [X] join sports club
+    6. [D] [X] apply for internship (by: Jun 01 2022)
+    7. [E] [ ] breakfast with master (at: Nov 11 2022 09:30 am)
+    8. [T] [X] join computing club
+    Remaining number of tasks: 8
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
     ------------------------------
     ------------------------------
     Got it! Added this task: 
-        [T] [ ] return cs2113 textbook
-    Remaining number of tasks: 5
+        [T] [ ] return cs2113 reference book
+    Remaining number of tasks: 9
     ------------------------------
     ------------------------------
     Here are the tasks in your list:
-    1. [T] [X] read book
-    2. [D] [ ] return book (by: June 6th)
-    3. [E] [ ] project meeting (at: Aug 6th 2-4pm)
-    4. [T] [X] join sports club
-    5. [T] [ ] return cs2113 textbook
-    Remaining number of tasks: 5
+    1. [T] [ ] go to the gym
+    2. [E] [ ] countdown (at: Dec 31 2022 23:59 pm)
+    3. [D] [X] return book (by: Jun 01 2022)
+    4. [E] [ ] project meeting (at: Sep 29 2022 14:30 pm)
+    5. [T] [X] join sports club
+    6. [D] [X] apply for internship (by: Jun 01 2022)
+    7. [E] [ ] breakfast with master (at: Nov 11 2022 09:30 am)
+    8. [T] [X] join computing club
+    9. [T] [ ] return cs2113 reference book
+    Remaining number of tasks: 9
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: invalid time format
+    ------------------------------
+    ------------------------------
+    Error: invalid time format
+    ------------------------------
+    ------------------------------
+    Got it! Added this task: 
+        [D] [ ] apply for finanial aid (by: May 05 2023)
+    Remaining number of tasks: 10
+    ------------------------------
+    ------------------------------
+    Here are the tasks in your list:
+    1. [T] [ ] go to the gym
+    2. [E] [ ] countdown (at: Dec 31 2022 23:59 pm)
+    3. [D] [X] return book (by: Jun 01 2022)
+    4. [E] [ ] project meeting (at: Sep 29 2022 14:30 pm)
+    5. [T] [X] join sports club
+    6. [D] [X] apply for internship (by: Jun 01 2022)
+    7. [E] [ ] breakfast with master (at: Nov 11 2022 09:30 am)
+    8. [T] [X] join computing club
+    9. [T] [ ] return cs2113 reference book
+    10. [D] [ ] apply for finanial aid (by: May 05 2023)
+    Remaining number of tasks: 10
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: invalid time format
+    ------------------------------
+    ------------------------------
+    Error: invalid time format
+    ------------------------------
+    ------------------------------
+    Got it! Added this task: 
+        [E] [ ] staycation (at: Jan 01 2023 03:59 am)
+    Remaining number of tasks: 11
+    ------------------------------
+    ------------------------------
+    Here are the tasks in your list:
+    1. [T] [ ] go to the gym
+    2. [E] [ ] countdown (at: Dec 31 2022 23:59 pm)
+    3. [D] [X] return book (by: Jun 01 2022)
+    4. [E] [ ] project meeting (at: Sep 29 2022 14:30 pm)
+    5. [T] [X] join sports club
+    6. [D] [X] apply for internship (by: Jun 01 2022)
+    7. [E] [ ] breakfast with master (at: Nov 11 2022 09:30 am)
+    8. [T] [X] join computing club
+    9. [T] [ ] return cs2113 reference book
+    10. [D] [ ] apply for finanial aid (by: May 05 2023)
+    11. [E] [ ] staycation (at: Jan 01 2023 03:59 am)
+    Remaining number of tasks: 11
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: task specified was not found
+    ------------------------------
+    ------------------------------
+    Error: task specified was not found
+    ------------------------------
+    ------------------------------
+    Error: task specified was not found
     ------------------------------
     ------------------------------
     Error: task specified was not found
@@ -39,71 +155,175 @@ What can I do for you?
     ------------------------------
     ------------------------------
     I've marked this task: 
-    [T] [X] return cs2113 textbook
+    [E] [X] staycation (at: Jan 01 2023 03:59 am)
     ------------------------------
     ------------------------------
     Task is already marked
     ------------------------------
     ------------------------------
-    I've unmarked this task: 
-    [T] [ ] return cs2113 textbook
-    ------------------------------
-    ------------------------------
-    Got it! Added this task: 
-        [D] [ ] borrow cs2102 textbook (by: 9 November 2022)
-    Remaining number of tasks: 6
-    ------------------------------
-    ------------------------------
-    Here are the tasks in your list:
-    1. [T] [X] read book
-    2. [D] [ ] return book (by: June 6th)
-    3. [E] [ ] project meeting (at: Aug 6th 2-4pm)
-    4. [T] [X] join sports club
-    5. [T] [ ] return cs2113 textbook
-    6. [D] [ ] borrow cs2102 textbook (by: 9 November 2022)
-    Remaining number of tasks: 6
-    ------------------------------
-    ------------------------------
     Task has not been marked
     ------------------------------
     ------------------------------
-    I've marked this task: 
-    [D] [X] borrow cs2102 textbook (by: 9 November 2022)
-    ------------------------------
-    ------------------------------
-    Got it! Added this task: 
-        [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
-    Remaining number of tasks: 7
+    I've unmarked this task: 
+    [E] [ ] staycation (at: Jan 01 2023 03:59 am)
     ------------------------------
     ------------------------------
     Here are the tasks in your list:
-    1. [T] [X] read book
-    2. [D] [ ] return book (by: June 6th)
-    3. [E] [ ] project meeting (at: Aug 6th 2-4pm)
+    1. [T] [ ] go to the gym
+    2. [E] [ ] countdown (at: Dec 31 2022 23:59 pm)
+    3. [D] [X] return book (by: Jun 01 2022)
+    4. [E] [ ] project meeting (at: Sep 29 2022 14:30 pm)
+    5. [T] [X] join sports club
+    6. [D] [X] apply for internship (by: Jun 01 2022)
+    7. [E] [ ] breakfast with master (at: Nov 11 2022 09:30 am)
+    8. [T] [X] join computing club
+    9. [T] [ ] return cs2113 reference book
+    10. [D] [ ] apply for finanial aid (by: May 05 2023)
+    11. [E] [ ] staycation (at: Jan 01 2023 03:59 am)
+    Remaining number of tasks: 11
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: task specified was not found
+    ------------------------------
+    ------------------------------
+    Error: task specified was not found
+    ------------------------------
+    ------------------------------
+    Error: task specified was not found
+    ------------------------------
+    ------------------------------
+    Noted. I've removed this task:
+        [E] [ ] project meeting (at: Sep 29 2022 14:30 pm)
+    Remaining number of tasks: 10
+    ------------------------------
+    ------------------------------
+    Here are the tasks in your list:
+    1. [T] [ ] go to the gym
+    2. [E] [ ] countdown (at: Dec 31 2022 23:59 pm)
+    3. [D] [X] return book (by: Jun 01 2022)
     4. [T] [X] join sports club
-    5. [T] [ ] return cs2113 textbook
-    6. [D] [X] borrow cs2102 textbook (by: 9 November 2022)
-    7. [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
-    Remaining number of tasks: 7
+    5. [D] [X] apply for internship (by: Jun 01 2022)
+    6. [E] [ ] breakfast with master (at: Nov 11 2022 09:30 am)
+    7. [T] [X] join computing club
+    8. [T] [ ] return cs2113 reference book
+    9. [D] [ ] apply for finanial aid (by: May 05 2023)
+    10. [E] [ ] staycation (at: Jan 01 2023 03:59 am)
+    Remaining number of tasks: 10
     ------------------------------
     ------------------------------
     I've marked this task: 
-    [E] [X] attend TIPS closing ceremoney (at: 25th November 2-4pm)
+    [E] [X] staycation (at: Jan 01 2023 03:59 am)
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Search results:
+    Number of results: 0
+    ------------------------------
+    ------------------------------
+    Search results:
+    [D] [X] return book (by: Jun 01 2022)
+    [T] [ ] return cs2113 reference book
+    Number of results: 2
+    ------------------------------
+    ------------------------------
+    Search results:
+    [T] [X] join sports club
+    [T] [X] join computing club
+    Number of results: 2
+    ------------------------------
+    ------------------------------
+    Search results:
+    [D] [X] return book (by: Jun 01 2022)
+    [T] [ ] return cs2113 reference book
+    Number of results: 2
+    ------------------------------
+    ------------------------------
+    Search results:
+    [D] [X] apply for internship (by: Jun 01 2022)
+    [D] [ ] apply for finanial aid (by: May 05 2023)
+    Number of results: 2
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: insufficient arguments
+    ------------------------------
+    ------------------------------
+    Error: invalid time format
+    ------------------------------
+    ------------------------------
+    Error: invalid time format
+    ------------------------------
+    ------------------------------
+    Error: invalid time format
+    ------------------------------
+    ------------------------------
+    Search results:
+    [E] [ ] countdown (at: Dec 31 2022 23:59 pm)
+    Number of results: 1
+    ------------------------------
+    ------------------------------
+    I've marked this task: 
+    [E] [X] countdown (at: Dec 31 2022 23:59 pm)
+    ------------------------------
+    ------------------------------
+    Search results:
+    [E] [X] countdown (at: Dec 31 2022 23:59 pm)
+    Number of results: 1
+    ------------------------------
+    ------------------------------
+    Here are the tasks in your list:
+    1. [T] [ ] go to the gym
+    2. [E] [X] countdown (at: Dec 31 2022 23:59 pm)
+    3. [D] [X] return book (by: Jun 01 2022)
+    4. [T] [X] join sports club
+    5. [D] [X] apply for internship (by: Jun 01 2022)
+    6. [E] [ ] breakfast with master (at: Nov 11 2022 09:30 am)
+    7. [T] [X] join computing club
+    8. [T] [ ] return cs2113 reference book
+    9. [D] [ ] apply for finanial aid (by: May 05 2023)
+    10. [E] [X] staycation (at: Jan 01 2023 03:59 am)
+    Remaining number of tasks: 10
+    ------------------------------
+    ------------------------------
+    Search results:
+    [E] [X] staycation (at: Jan 01 2023 03:59 am)
+    Number of results: 1
     ------------------------------
     ------------------------------
     I've unmarked this task: 
-    [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
+    [E] [ ] staycation (at: Jan 01 2023 03:59 am)
+    ------------------------------
+    ------------------------------
+    Search results:
+    [E] [ ] staycation (at: Jan 01 2023 03:59 am)
+    Number of results: 1
     ------------------------------
     ------------------------------
     Here are the tasks in your list:
-    1. [T] [X] read book
-    2. [D] [ ] return book (by: June 6th)
-    3. [E] [ ] project meeting (at: Aug 6th 2-4pm)
+    1. [T] [ ] go to the gym
+    2. [E] [X] countdown (at: Dec 31 2022 23:59 pm)
+    3. [D] [X] return book (by: Jun 01 2022)
     4. [T] [X] join sports club
-    5. [T] [ ] return cs2113 textbook
-    6. [D] [X] borrow cs2102 textbook (by: 9 November 2022)
-    7. [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
-    Remaining number of tasks: 7
+    5. [D] [X] apply for internship (by: Jun 01 2022)
+    6. [E] [ ] breakfast with master (at: Nov 11 2022 09:30 am)
+    7. [T] [X] join computing club
+    8. [T] [ ] return cs2113 reference book
+    9. [D] [ ] apply for finanial aid (by: May 05 2023)
+    10. [E] [ ] staycation (at: Jan 01 2023 03:59 am)
+    Remaining number of tasks: 10
     ------------------------------
     ------------------------------
     Bye. Hope to see you again soon!

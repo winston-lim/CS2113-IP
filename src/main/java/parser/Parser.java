@@ -17,7 +17,7 @@ import command.ListTasksCommand;
 import command.MarkTaskCommand;
 import command.UnmarkTaskCommand;
 import exception.CommandNotFoundException;
-import exception.InsufficentArgumentsException;
+import exception.InsufficientArgumentsException;
 import exception.InvalidFileDataException;
 import task.Deadline;
 import task.Event;
@@ -26,6 +26,9 @@ import task.TaskManager;
 import task.Todo;
 
 public class Parser {
+    /*
+     * Constants line separated by utility
+     */
     private static final String DEFAULT_DELIMITER = " ";
     private static final int COMMAND_INDEX = 0;
     private static final int DEFAULT_FIRST_INDEX = 0;
@@ -57,10 +60,6 @@ public class Parser {
     private static final String COMMAND_SEARCH_DATE = "search-date";
     private static final String COMMAND_EXIT = "bye";
 
-    private static final List<String> VALID_COMMAND_LIST = List.of(COMMAND_LIST, COMMAND_TODO,
-            COMMAND_DEADLINE, COMMAND_EVENT, COMMAND_DELETE_TASK, COMMAND_MARK_TASK,
-            COMMAND_UNMARK_TASK, COMMAND_SEARCH_TITLE, COMMAND_EXIT);
-
     private static final String AUTOFILL_SECONDS = ":00";
 
     public static final String DATETIME_FORMAT_REGEX = "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}";
@@ -69,6 +68,11 @@ public class Parser {
     public static final String DATE_FORMAT_REGEX = "\\d{4}-\\d{2}-\\d{2}";
     public static final DateTimeFormatter DATE_DECODE_FORMATTER =
             DateTimeFormatter.ofPattern("MMM dd YYYY");
+
+    // Properties
+    private static final List<String> VALID_COMMAND_LIST = List.of(COMMAND_LIST, COMMAND_TODO,
+            COMMAND_DEADLINE, COMMAND_EVENT, COMMAND_DELETE_TASK, COMMAND_MARK_TASK,
+            COMMAND_UNMARK_TASK, COMMAND_SEARCH_TITLE, COMMAND_SEARCH_DATE, COMMAND_EXIT);
 
 
     /**
@@ -84,6 +88,25 @@ public class Parser {
         return List.of(command, args);
     }
 
+    /**
+     * Gets the first word from user input, which is the command.
+     * 
+     * @param input a single line of user input
+     * @return String
+     */
+    public static final String getCommand(String input) {
+        return parseUserInput(input).get(COMMAND_INDEX)[COMMAND_INDEX];
+    }
+
+    /**
+     * Gets all subsequent words from user input, which are the arguments.
+     * 
+     * @param input a single line of user input
+     * @return String[] the arguments for a command
+     */
+    public static final String[] getArgs(String input) {
+        return parseUserInput(input).get(ARGS_INDEX);
+    }
 
     /**
      * Creaetes a specific command that represents what the user wants to do.
@@ -92,11 +115,11 @@ public class Parser {
      * @param input a single line of user input
      * @return Command
      * @throws CommandNotFoundException thrown when a given command does not exist
-     * @throws InsufficentArgumentsException thrown when a given command does not have enough
+     * @throws InsufficientArgumentsException thrown when a given command does not have enough
      *         arguments to run
      */
     public static final Command createCommand(TaskManager taskManager, String input)
-            throws CommandNotFoundException, InsufficentArgumentsException {
+            throws CommandNotFoundException, InsufficientArgumentsException {
         String command = getCommand(input);
         String[] args = getArgs(input);
         if (!VALID_COMMAND_LIST.contains(command)) {
@@ -127,30 +150,6 @@ public class Parser {
         }
     }
 
-
-    /**
-     * Gets the first word from user input, which is the command.
-     * 
-     * @param input a single line of user input
-     * @return String
-     */
-    public static final String getCommand(String input) {
-        return parseUserInput(input).get(COMMAND_INDEX)[COMMAND_INDEX];
-    }
-
-
-    /**
-     * Gets all subsequent words from user input, which are the arguments.
-     * 
-     * @param input a single line of user input
-     * @return String[] the arguments for a command
-     */
-    public static final String[] getArgs(String input) {
-        return parseUserInput(input).get(ARGS_INDEX);
-    }
-
-
-
     /**
      * Checks a given deadline for the format required for LocalDate.
      * 
@@ -160,7 +159,6 @@ public class Parser {
     public static final boolean checkDeadlineFormat(String deadline) {
         return deadline.matches(DATE_FORMAT_REGEX);
     }
-
 
     /**
      * Checks a given duration for the format required for LocalDateTime.
@@ -190,7 +188,6 @@ public class Parser {
         String taskTiming = task.getTaskTiming();
         return taskType + DATA_TOKEN_SEPARATOR + taskStatusNumber + DATA_TOKEN_SEPARATOR + taskTitle
                 + DATA_TOKEN_SEPARATOR + taskTiming;
-
     }
 
     /**
@@ -205,7 +202,6 @@ public class Parser {
         }
         return fileContent;
     }
-
 
     /**
      * Given a line from local storage, returns a Task that is constructed from it.

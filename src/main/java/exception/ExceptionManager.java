@@ -5,6 +5,7 @@ import java.io.IOException;
 import user.UserInteraction;
 
 public class ExceptionManager {
+    // Constants
     public static final String DEFAULT_ERROR_MESSAGE = "something went wrong";
 
     /**
@@ -20,7 +21,7 @@ public class ExceptionManager {
         if (e instanceof CommandNotFoundException) {
             errorMessage = "invalid command";
         }
-        if (e instanceof InsufficentArgumentsException) {
+        if (e instanceof InsufficientArgumentsException) {
             errorMessage = "insufficient arguments";
         }
         if (e instanceof TaskNotFoundException) {

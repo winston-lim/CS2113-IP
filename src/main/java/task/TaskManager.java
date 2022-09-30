@@ -15,6 +15,9 @@ import parser.Parser;
 import user.UserInteraction;
 
 public class TaskManager implements TaskManagerInterface {
+    /*
+     * Constants separated by utility
+     */
     private static final String FILE_PATH = "./data.txt";
 
     protected static final String QUERY_TASK_START_TEXT = "Search results:";
@@ -26,7 +29,7 @@ public class TaskManager implements TaskManagerInterface {
     protected static final String UNMARK_TASK_START_TEXT = "I've unmarked this task: ";
     protected static final String UNMARK_TASK_ERROR_TEXT = "Task has not been marked";
     protected static final String COMMAND_END_TEXT = "Remaining number of tasks: ";
-    protected static final String QUERY_TASK_END_TEXT = "Number of results:";
+    protected static final String QUERY_TASK_END_TEXT = "Number of results: ";
 
     protected static final String DEFAULT_INDENTATION = "    ";
     protected static final String DEFAULT_DELIMITER = " ";
@@ -37,6 +40,9 @@ public class TaskManager implements TaskManagerInterface {
 
     private static final String TODO_TASK_TYPE = "T";
 
+    /*
+     * Properties
+     */
     private final List<Task> recordedTasks;
     private final FileManager fileManager;
 
@@ -196,12 +202,24 @@ public class TaskManager implements TaskManagerInterface {
         saveTasks(recordedTasks);
     }
 
+    /**
+     * Overwrites given file with updated data - is mainly used for persisting local updates to
+     * storage.
+     * 
+     * @param tasks a list of tasks with the latest update
+     * @throws IOException thrown when saving to local storage fails
+     */
+    private void saveTasks(List<Task> tasks) throws IOException {
+        String fileContent = Parser.stringifyTasks(tasks);
+        this.fileManager.writeToFile(fileContent);
+    }
+
 
     /**
      * Searches existing records with dates equal to a given date.
      * 
      * @param date the date to search with
-     * @return List<Task>
+     * @return a list of tasks from the query
      */
     public final List<Task> searchByDate(LocalDate date) {
         List<Task> result = new ArrayList<Task>();
@@ -217,23 +235,10 @@ public class TaskManager implements TaskManagerInterface {
     }
 
     /**
-     * Overwrites given file with updated data - is mainly used for persisting local updates to
-     * storage.
-     * 
-     * @param tasks a list of tasks with the latest update
-     * @throws IOException thrown when saving to local storage fails
-     */
-    private void saveTasks(List<Task> tasks) throws IOException {
-        String fileContent = Parser.stringifyTasks(tasks);
-        this.fileManager.writeToFile(fileContent);
-    }
-
-
-    /**
      * Searches existing records for titles containing a given keyword.
      * 
      * @param query the keyword to query with
-     * @return List<Task>
+     * @return a list of tasks from the resulting query
      */
     public final List<Task> searchByTitle(String query) {
         List<Task> result = new ArrayList<Task>();

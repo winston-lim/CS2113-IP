@@ -1,6 +1,6 @@
 package command;
 
-abstract public class Command implements CommandInterface {
+public abstract class Command implements CommandInterface {
     protected static final String DEFAULT_DELIMITER = " ";
     protected static final int DEFAULT_FIRST_INDEX = 0;
     protected static final int DEFAULT_INDEX_INCREMENT = 1;

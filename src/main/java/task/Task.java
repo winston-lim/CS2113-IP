@@ -1,8 +1,11 @@
 package task;
 
-abstract public class Task implements TaskInterface {
+public abstract class Task implements TaskInterface {
+    // Constants
     private static final String STATUS_NOT_DONE = "[ ]";
     private static final String STATUS_DONE = "[X]";
+
+    // Properties
     protected final String title;
     private boolean isDone;
 

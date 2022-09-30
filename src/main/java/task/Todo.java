@@ -3,6 +3,7 @@ package task;
 import java.time.LocalDate;
 
 public class Todo extends Task {
+    // Constants
     private static final String TODO_PREFIX = "[T] ";
     private static final String TASK_TYPE = "T";
 
@@ -18,7 +19,7 @@ public class Todo extends Task {
     /**
      * Checks if the date of task is equal to a given date.
      * 
-     * @param date
+     * @param date the date to check with
      * @return boolean
      */
     public boolean equalDate(LocalDate date) {

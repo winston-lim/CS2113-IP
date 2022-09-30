@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import parser.Parser;
 
 public class Deadline extends Task {
+    // Constants
     private static final String DEADLINE_PREFIX = "[D] ";
     private static final String TASK_TYPE = "D";
 
+    // Properties
     private final LocalDate deadline;
 
     public Deadline(String description, LocalDate deadline) {
