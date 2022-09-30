@@ -23,7 +23,7 @@ fi
 java -classpath ../bin Duke < input.txt > ACTUAL.TXT
 
 # revert updated data file to original copy
-cp ./data/test.txt ./data/duke.txt
+cp ./test-inputs.txt ./data.txt
 
 # convert to UNIX format
 cp EXPECTED.TXT EXPECTED-UNIX.TXT

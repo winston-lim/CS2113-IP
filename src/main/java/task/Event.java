@@ -2,9 +2,11 @@ package task;
 
 public class Event extends Task {
     private static final String EVENT_PREFIX = "[E] ";
+    private static final String TASK_TYPE = "E";
+
     private final String duration;
 
-    Event(String description, String duration) {
+    public Event(String description, String duration) {
         super(description);
         this.duration = duration;
     }
@@ -14,7 +16,13 @@ public class Event extends Task {
         this.duration = duration;
     }
 
-    public String getDuration() {
+    @Override
+    public String getTaskType() {
+        return TASK_TYPE;
+    }
+
+    @Override
+    public String getTaskTiming() {
         return this.duration;
     }
 

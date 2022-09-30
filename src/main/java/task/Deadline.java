@@ -2,9 +2,11 @@ package task;
 
 public class Deadline extends Task {
     private static final String DEADLINE_PREFIX = "[D] ";
+    private static final String TASK_TYPE = "D";
+
     private final String deadline;
 
-    Deadline(String description, String deadline) {
+    public Deadline(String description, String deadline) {
         super(description);
         this.deadline = deadline;
     }
@@ -14,8 +16,14 @@ public class Deadline extends Task {
         this.deadline = deadline;
     }
 
-    public String getDeadline() {
-        return deadline;
+    @Override
+    public String getTaskType() {
+        return TASK_TYPE;
+    }
+
+    @Override
+    public String getTaskTiming() {
+        return this.deadline;
     }
 
     @Override

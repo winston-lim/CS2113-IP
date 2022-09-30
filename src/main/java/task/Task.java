@@ -21,27 +21,34 @@ public class Task implements TaskInterface {
         this.isDone = isDone;
     }
 
-    @Override
     public final boolean getStatus() {
         return this.isDone;
     }
 
-    @Override
     public final void setStatus(boolean isDone) {
         this.isDone = isDone;
     }
 
-    @Override
     public final String getStatusIcon() {
         return (this.isDone ? STATUS_DONE : STATUS_NOT_DONE); // mark done task with X
     }
 
-    @Override
-    public String getDescription() {
+    public String getTitle() {
         return this.title;
     }
 
-    @Override
+    public String getDescription() {
+        return this.getTitle();
+    }
+
+    public String getTaskType() {
+        return "";
+    }
+
+    public String getTaskTiming() {
+        return "";
+    }
+
     public String getStatusDescription() {
         return getStatusIcon() + " " + getDescription();
     }

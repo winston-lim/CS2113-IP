@@ -1,0 +1,162 @@
+package parser;
+
+import java.util.Arrays;
+import java.util.List;
+import command.AddDeadlineCommand;
+import command.AddEventCommand;
+import command.AddTodoCommand;
+import command.Command;
+import command.DeleteTaskCommand;
+import command.ExitCommand;
+import command.ListTasksCommand;
+import command.MarkTaskCommand;
+import command.UnmarkTaskCommand;
+import exception.CommandNotFoundException;
+import exception.InsufficentArgumentsException;
+import exception.InvalidFileDataException;
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.TaskManager;
+import task.Todo;
+
+public class Parser {
+    private static final String DEFAULT_DELIMITER = " ";
+    private static final int COMMAND_INDEX = 0;
+    private static final int DEFAULT_FIRST_INDEX = 0;
+    private static final int ARGS_INDEX = 1;
+
+    private static final String DATA_TOKEN_SEPARATOR = " | ";
+    private static final String DATA_TOKEN_SEPARATOR_REGEX = " \\| ";
+
+    private static final int TASK_TYPE_INDEX = 0;
+    private static final int TASK_STATUS_INDEX = 4;
+    private static final int TASK_TITLE_INDEX = 8;
+    private static final int TASK_TIMING_INDEX = 1;
+
+    private static final String TODO_TASK_TYPE = "T";
+    private static final String DEADLINE_TASK_TYPE = "D";
+    private static final String EVENT_TASK_TYPE = "E";
+
+    private static final int TASK_STATUS_MARKED = 1;
+    private static final int TASK_STATUS_UNMARKED = 0;
+
+    private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_TODO = "todo";
+    private static final String COMMAND_DEADLINE = "deadline";
+    private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_DELETE_TASK = "delete";
+    private static final String COMMAND_MARK_TASK = "mark";
+    private static final String COMMAND_UNMARK_TASK = "unmark";
+    private static final String COMMAND_EXIT = "bye";
+
+    private static final List<String> VALID_COMMAND_LIST =
+            List.of(COMMAND_LIST, COMMAND_TODO, COMMAND_DEADLINE, COMMAND_EVENT,
+                    COMMAND_DELETE_TASK, COMMAND_MARK_TASK, COMMAND_UNMARK_TASK, COMMAND_EXIT);
+
+    private static final List<String[]> parseUserInput(String input) {
+        String[] inputs = input.split(DEFAULT_DELIMITER);
+        String[] command = Arrays.copyOfRange(inputs, COMMAND_INDEX, COMMAND_INDEX + 1);
+        String[] args = Arrays.copyOfRange(inputs, COMMAND_INDEX + 1, inputs.length);
+        return List.of(command, args);
+    }
+
+    public static final Command createCommand(TaskManager taskManager, String input)
+            throws CommandNotFoundException, InsufficentArgumentsException {
+        String command = getCommand(input);
+        String[] args = getArgs(input);
+        if (!VALID_COMMAND_LIST.contains(command)) {
+            throw new CommandNotFoundException();
+        }
+        // assert that command exists
+        switch (command) {
+        case COMMAND_LIST:
+            return new ListTasksCommand(taskManager);
+        case COMMAND_TODO:
+            return new AddTodoCommand(taskManager, args);
+        case COMMAND_DEADLINE:
+            return new AddDeadlineCommand(taskManager, args);
+        case COMMAND_EVENT:
+            return new AddEventCommand(taskManager, args);
+        case COMMAND_DELETE_TASK:
+            return new DeleteTaskCommand(taskManager, args);
+        case COMMAND_MARK_TASK:
+            return new MarkTaskCommand(taskManager, args);
+        case COMMAND_UNMARK_TASK:
+            return new UnmarkTaskCommand(taskManager, args);
+        default:
+            return new ExitCommand();
+        }
+    }
+
+    public static final String getCommand(String input) {
+        return parseUserInput(input).get(COMMAND_INDEX)[COMMAND_INDEX];
+    }
+
+    public static final String[] getArgs(String input) {
+        return parseUserInput(input).get(ARGS_INDEX);
+    }
+
+    public static final String stringifyTask(Task task) {
+        String taskType = task.getTaskType();
+        boolean taskStatus = task.getStatus();
+        int taskStatusNumber = taskStatus ? 1 : 0;
+        String taskTitle = task.getTitle();
+        if (taskType.equals(TODO_TASK_TYPE)) {
+            return taskType + DATA_TOKEN_SEPARATOR + taskStatusNumber + DATA_TOKEN_SEPARATOR
+                    + taskTitle;
+        }
+        String taskTiming = task.getTaskTiming();
+        return taskType + DATA_TOKEN_SEPARATOR + taskStatusNumber + DATA_TOKEN_SEPARATOR + taskTitle
+                + DATA_TOKEN_SEPARATOR + taskTiming;
+
+    }
+
+    /**
+     * Saves all tasks to data file by overwriting all its contents.
+     * 
+     * @param tasks A list of Task
+     */
+    public static final String stringifyTasks(List<Task> tasks) {
+        String fileContent = "";
+        for (Task task : tasks) {
+            fileContent += stringifyTask(task) + System.lineSeparator();
+        }
+        return fileContent;
+    }
+
+    public static final Task parseDataToTask(String data) throws InvalidFileDataException {
+        try {
+            String taskType = data.substring(TASK_TYPE_INDEX, TASK_TYPE_INDEX + 1);
+            // Task type is not specified
+            if (!taskType.equals(TODO_TASK_TYPE) && !taskType.equals(DEADLINE_TASK_TYPE)
+                    && !taskType.equals(EVENT_TASK_TYPE)) {
+                throw new InvalidFileDataException();
+            }
+
+            Integer taskStatusNumber =
+                    Integer.parseInt(data.substring(TASK_STATUS_INDEX, TASK_STATUS_INDEX + 1));
+            // Task Status Number is not valid
+            if (!taskStatusNumber.equals(TASK_STATUS_MARKED)
+                    && !taskStatusNumber.equals(TASK_STATUS_UNMARKED)) {
+                throw new InvalidFileDataException();
+            }
+            boolean taskStatus = taskStatusNumber.equals(TASK_STATUS_MARKED);
+
+            String[] otherData = data.substring(TASK_TITLE_INDEX, data.length())
+                    .split(DATA_TOKEN_SEPARATOR_REGEX);
+            String taskTitle = otherData[DEFAULT_FIRST_INDEX];
+            if (taskType.equals(TODO_TASK_TYPE)) { // no deadline or duration
+                return new Todo(taskTitle, taskStatus);
+            }
+
+            String taskTiming = otherData[TASK_TIMING_INDEX];
+            if (taskType.equals(DEADLINE_TASK_TYPE)) {
+                return new Deadline(taskTitle, taskTiming, taskStatus);
+            }
+            return new Event(taskTitle, taskTiming, taskStatus);
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidFileDataException();
+        }
+    }
+}

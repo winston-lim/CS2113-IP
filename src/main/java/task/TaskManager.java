@@ -1,44 +1,67 @@
 package task;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import console.Console;
-import exception.InsufficentArgumentsException;
-import exception.InvalidDataException;
+import java.util.Scanner;
+import exception.ExceptionManager;
+import exception.InvalidFileDataException;
 import exception.TaskNotFoundException;
 import file.FileManager;
+import parser.Parser;
+import user.UserInteraction;
 
 public class TaskManager implements TaskManagerInterface {
-    private static final String DEADLINE_DIVIDER = "/by";
-    private static final String DURATION_DIVIDER = "/at";
+    private static final String FILE_PATH = "./data.txt";
 
-    private static final String TASK_TODO = "todo";
-    private static final String TASK_DEADLINE = "deadline";
-    private static final String TASK_EVENT = "event";
+    protected static final String LIST_TASK_START_TEXT = "Here are the tasks in your list:";
+    protected static final String ADD_TASK_START_TEXT = "Got it! Added this task: ";
+    protected static final String DELETE_TASK_START_TEXT = "Noted. I've removed this task:";
+    protected static final String MARK_TASK_START_TEXT = "I've marked this task: ";
+    protected static final String MARK_TASK_ERROR_TEXT = "Task is already marked";
+    protected static final String UNMARK_TASK_START_TEXT = "I've unmarked this task: ";
+    protected static final String UNMARK_TASK_ERROR_TEXT = "Task has not been marked";
+    protected static final String COMMAND_END_TEXT = "Remaining number of tasks: ";
 
-    private static final int TASK_NUMBER_INDEX = 0;
+    protected static final String DEFAULT_INDENTATION = "    ";
+    protected static final String DEFAULT_DELIMITER = " ";
+    protected static final String ORDERED_LIST_PREFIX = ". ";
+
+    private static final int DIFF_INDEX_FROM_ID = 1;
     private static final int MINIMUM_TASK_NUMBER = 1;
 
     private final List<Task> recordedTasks;
-
-    private static FileManager fm = new FileManager();
+    private final FileManager fileManager;
 
     /**
-     * Constructor method.
+     * Default Constructor method. Throws FileNotFoundException, InvalidFileDataException, but will
+     * be handled immediately.
      */
     public TaskManager() {
-        List<Task> tasks = new ArrayList<Task>();
-        try {
-            tasks = fm.getTasks();
-        } catch (InvalidDataException e) {
-            Console.printErrorResponse("could not get saved data");
+        this.fileManager = new FileManager(FILE_PATH);
+        this.recordedTasks = new ArrayList<Task>();
+        File data = this.fileManager.readFromFile();
+        if (data.exists()) {
+            try {
+                Scanner sc = new Scanner(data);
+                while (sc.hasNextLine()) {
+                    try {
+                        recordedTasks.add(Parser.parseDataToTask(sc.nextLine()));
+                    } catch (InvalidFileDataException e) {
+                        ExceptionManager.handleException(e);
+                    }
+                }
+                sc.close();
+            } catch (FileNotFoundException e) { // FileNotFound exception is caught here
+                ExceptionManager.handleException(e);
+            }
         }
-        this.recordedTasks = tasks;
-        for (Task t : recordedTasks) {
-            System.out.println(t.getStatusDescription());
-        }
+    }
+
+    public List<Task> getRecordedTasks() {
+        return this.recordedTasks;
     }
 
     /**
@@ -47,141 +70,103 @@ public class TaskManager implements TaskManagerInterface {
     @Override
     public final void listTasks() {
         List<String> messages = new ArrayList<String>();
-        messages.add("Here are the tasks in your list:");
+        messages.add(LIST_TASK_START_TEXT);
 
         for (int i = 1; i <= recordedTasks.size(); ++i) {
-            messages.add(i + ". " + recordedTasks.get(i - 1).getStatusDescription());
+            messages.add(i + ORDERED_LIST_PREFIX + recordedTasks.get(i - 1).getStatusDescription());
         }
 
-        messages.add("Total number of tasks is: " + recordedTasks.size());
-        Console.printNormalResponse(messages.toArray(new String[0]));
+        messages.add(COMMAND_END_TEXT + recordedTasks.size());
+        UserInteraction.printNormalResponse(messages.toArray(new String[0]));
     }
 
     /**
      * Creates a new task.
      * 
-     * @param task a string representing the task type
-     * @param args an array of strings from user inputs
+     * @param task a Task to be added
      */
-    @Override
-    public final void addTask(String task, String[] args)
-            throws InsufficentArgumentsException, IOException {
-        if (args.length == 0) {
-            throw new InsufficentArgumentsException();
-        }
+    public final void addTask(Task task) throws IOException {
+        this.recordedTasks.add(task);
 
-        String title;
-        int index;
-
-        switch (task) {
-        case TASK_TODO:
-            title = String.join(" ", args);
-            recordedTasks.add(new Todo(title));
-            break;
-        case TASK_DEADLINE:
-            index = Arrays.asList(args).indexOf(DEADLINE_DIVIDER);
-            title = String.join(" ", Arrays.copyOfRange(args, 0, index));
-            String deadline = String.join(" ", Arrays.copyOfRange(args, index + 1, args.length));
-            recordedTasks.add(new Deadline(title, deadline));
-            break;
-        case TASK_EVENT:
-            index = Arrays.asList(args).indexOf(DURATION_DIVIDER);
-            title = String.join(" ", Arrays.copyOfRange(args, 0, index));
-            String duration = String.join(" ", Arrays.copyOfRange(args, index + 1, args.length));
-            recordedTasks.add(new Event(title, duration));
-            break;
-        default:
-        }
-
-        Console.printNormalResponse("Got it! Added this task: ",
-                "    " + recordedTasks.get(this.recordedTasks.size() - 1).getStatusDescription(),
-                "You now have: " + this.recordedTasks.size() + " tasks");
+        UserInteraction.printNormalResponse(ADD_TASK_START_TEXT,
+                DEFAULT_INDENTATION
+                        + recordedTasks.get(this.recordedTasks.size() - 1).getStatusDescription(),
+                COMMAND_END_TEXT + this.recordedTasks.size());
 
         // persist updates to local storage
-        fm.saveTasks(recordedTasks);
+        this.saveTasks(recordedTasks);
     }
 
     /**
      * Removes a task if it exists.
      * 
-     * @param args a list of string arguments provided by user
+     * @param id an integer specifying task to be deleted
      */
-    public void deleteTask(String[] args)
-            throws InsufficentArgumentsException, TaskNotFoundException, IOException {
-        if (args.length == 0) {
-            throw new InsufficentArgumentsException();
-        }
-
-        int taskNum = Integer.parseInt(args[TASK_NUMBER_INDEX]);
-
-        if (taskNum < MINIMUM_TASK_NUMBER || taskNum > recordedTasks.size()) {
+    public void deleteTask(int id) throws TaskNotFoundException, IOException {
+        if (id < MINIMUM_TASK_NUMBER || id > recordedTasks.size()) {
             throw new TaskNotFoundException();
         }
-
-        String description = recordedTasks.get(taskNum - 1).getStatusDescription();
-        recordedTasks.remove(taskNum - 1);
-        Console.printNormalResponse("Noted. I've removed this task:", "    " + description,
-                "You now have: " + recordedTasks.size() + " tasks");
+        int taskIndex = id - DIFF_INDEX_FROM_ID;
+        String description = recordedTasks.get(taskIndex).getStatusDescription();
+        recordedTasks.remove(taskIndex);
+        UserInteraction.printNormalResponse(DELETE_TASK_START_TEXT,
+                DEFAULT_INDENTATION + description, COMMAND_END_TEXT + recordedTasks.size());
         // persist updates to local storage
-        fm.saveTasks(recordedTasks);
+        this.saveTasks(recordedTasks);
     }
 
     /**
      * Marks a task as done by calling Task.setIsDone.
      * 
-     * @param args a list of string arguments provided by user
+     * @param id an integer specifying task to be marked as done
      */
     @Override
-    public final void markTask(String[] args)
-            throws InsufficentArgumentsException, TaskNotFoundException, IOException {
-        if (args.length == 0) {
-            throw new InsufficentArgumentsException();
-        }
-
-        int taskNum = Integer.parseInt(args[TASK_NUMBER_INDEX]);
-
-        if (taskNum < MINIMUM_TASK_NUMBER || taskNum > recordedTasks.size()) {
+    public final void markTask(int id) throws TaskNotFoundException, IOException {
+        if (id < MINIMUM_TASK_NUMBER || id > recordedTasks.size()) {
             throw new TaskNotFoundException();
         }
 
-        if (recordedTasks.get(taskNum - 1).getStatus()) {
-            Console.printNormalResponse("Task is already marked");
+        int taskIndex = id - DIFF_INDEX_FROM_ID;
+
+        if (recordedTasks.get(taskIndex).getStatus()) {
+            UserInteraction.printNormalResponse(MARK_TASK_ERROR_TEXT);
             return;
         }
 
-        recordedTasks.get(taskNum - 1).setStatus(true);
-        Console.printNormalResponse("I've marked this task: ",
-                recordedTasks.get(taskNum - 1).getStatusDescription());
+        recordedTasks.get(taskIndex).setStatus(true);
+        UserInteraction.printNormalResponse(MARK_TASK_START_TEXT,
+                recordedTasks.get(taskIndex).getStatusDescription());
         // persist updates to local storage
-        fm.saveTasks(recordedTasks);
+        this.saveTasks(recordedTasks);
     }
 
     /**
      * Marks a task as not done by calling Task.setIsDone.
      * 
-     * @param args a list of string arguments provided by user
+     * @param id an integer specifying task to be marked as not done
      */
     @Override
-    public final void unmarkTask(String[] args)
-            throws InsufficentArgumentsException, TaskNotFoundException, IOException {
-        if (args.length == 0) {
-            throw new InsufficentArgumentsException();
-        }
-        int taskNum = Integer.parseInt(args[TASK_NUMBER_INDEX]);
-
-        if (taskNum < MINIMUM_TASK_NUMBER || taskNum > recordedTasks.size()) {
+    public final void unmarkTask(int id) throws TaskNotFoundException, IOException {
+        if (id < MINIMUM_TASK_NUMBER || id > recordedTasks.size()) {
             throw new TaskNotFoundException();
         }
 
-        if (!recordedTasks.get(taskNum - 1).getStatus()) {
-            Console.printNormalResponse("Task has not been marked");
+        int taskIndex = id - DIFF_INDEX_FROM_ID;
+
+        if (!recordedTasks.get(taskIndex).getStatus()) {
+            UserInteraction.printNormalResponse(UNMARK_TASK_ERROR_TEXT);
             return;
         }
 
-        recordedTasks.get(taskNum - 1).setStatus(false);
-        Console.printNormalResponse("I've unmarked this task: ",
-                recordedTasks.get(taskNum - 1).getStatusDescription());
+        recordedTasks.get(taskIndex).setStatus(false);
+        UserInteraction.printNormalResponse(UNMARK_TASK_START_TEXT,
+                recordedTasks.get(taskIndex).getStatusDescription());
         // persist updates to local storage
-        fm.saveTasks(recordedTasks);
+        saveTasks(recordedTasks);
+    }
+
+    private void saveTasks(List<Task> tasks) throws IOException {
+        String fileContent = Parser.stringifyTasks(this.recordedTasks);
+        this.fileManager.writeToFile(fileContent);
     }
 }

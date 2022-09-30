@@ -1,12 +1,10 @@
 package file;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import exception.InvalidDataException;
-import task.Task;
 
 public interface FileManagerInterface {
-    List<Task> getTasks() throws InvalidDataException;
+    File readFromFile();
 
-    void saveTasks(List<Task> tasks) throws IOException;
+    void writeToFile(String fileContent) throws IOException;
 }

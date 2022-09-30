@@ -6,22 +6,18 @@
 Hello! I'm Duke
 What can I do for you?
 ------------------------------
-[T] [X] read book
-[D] [ ] return book (by: June 6th)
-[E] [ ] project meeting (at: Aug 6th 2-4pm)
-[T] [X] join sports club
     ------------------------------
     Here are the tasks in your list:
     1. [T] [X] read book
     2. [D] [ ] return book (by: June 6th)
     3. [E] [ ] project meeting (at: Aug 6th 2-4pm)
     4. [T] [X] join sports club
-    Total number of tasks is: 4
+    Remaining number of tasks: 4
     ------------------------------
     ------------------------------
     Got it! Added this task: 
         [T] [ ] return cs2113 textbook
-    You now have: 5 tasks
+    Remaining number of tasks: 5
     ------------------------------
     ------------------------------
     Here are the tasks in your list:
@@ -30,7 +26,13 @@ What can I do for you?
     3. [E] [ ] project meeting (at: Aug 6th 2-4pm)
     4. [T] [X] join sports club
     5. [T] [ ] return cs2113 textbook
-    Total number of tasks is: 5
+    Remaining number of tasks: 5
+    ------------------------------
+    ------------------------------
+    Error: task specified was not found
+    ------------------------------
+    ------------------------------
+    Error: task specified was not found
     ------------------------------
     ------------------------------
     Error: task specified was not found
@@ -40,13 +42,16 @@ What can I do for you?
     [T] [X] return cs2113 textbook
     ------------------------------
     ------------------------------
+    Task is already marked
+    ------------------------------
+    ------------------------------
     I've unmarked this task: 
     [T] [ ] return cs2113 textbook
     ------------------------------
     ------------------------------
     Got it! Added this task: 
         [D] [ ] borrow cs2102 textbook (by: 9 November 2022)
-    You now have: 6 tasks
+    Remaining number of tasks: 6
     ------------------------------
     ------------------------------
     Here are the tasks in your list:
@@ -56,10 +61,7 @@ What can I do for you?
     4. [T] [X] join sports club
     5. [T] [ ] return cs2113 textbook
     6. [D] [ ] borrow cs2102 textbook (by: 9 November 2022)
-    Total number of tasks is: 6
-    ------------------------------
-    ------------------------------
-    Error: task specified was not found
+    Remaining number of tasks: 6
     ------------------------------
     ------------------------------
     Task has not been marked
@@ -69,12 +71,9 @@ What can I do for you?
     [D] [X] borrow cs2102 textbook (by: 9 November 2022)
     ------------------------------
     ------------------------------
-    Task is already marked
-    ------------------------------
-    ------------------------------
     Got it! Added this task: 
         [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
-    You now have: 7 tasks
+    Remaining number of tasks: 7
     ------------------------------
     ------------------------------
     Here are the tasks in your list:
@@ -85,7 +84,7 @@ What can I do for you?
     5. [T] [ ] return cs2113 textbook
     6. [D] [X] borrow cs2102 textbook (by: 9 November 2022)
     7. [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
-    Total number of tasks is: 7
+    Remaining number of tasks: 7
     ------------------------------
     ------------------------------
     I've marked this task: 
@@ -96,40 +95,15 @@ What can I do for you?
     [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
     ------------------------------
     ------------------------------
-    I've unmarked this task: 
-    [D] [ ] borrow cs2102 textbook (by: 9 November 2022)
-    ------------------------------
-    ------------------------------
     Here are the tasks in your list:
     1. [T] [X] read book
     2. [D] [ ] return book (by: June 6th)
     3. [E] [ ] project meeting (at: Aug 6th 2-4pm)
     4. [T] [X] join sports club
     5. [T] [ ] return cs2113 textbook
-    6. [D] [ ] borrow cs2102 textbook (by: 9 November 2022)
+    6. [D] [X] borrow cs2102 textbook (by: 9 November 2022)
     7. [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
-    Total number of tasks is: 7
-    ------------------------------
-    ------------------------------
-    Error: task specified was not found
-    ------------------------------
-    ------------------------------
-    Error: task specified was not found
-    ------------------------------
-    ------------------------------
-    Noted. I've removed this task:
-        [D] [ ] borrow cs2102 textbook (by: 9 November 2022)
-    You now have: 6 tasks
-    ------------------------------
-    ------------------------------
-    Here are the tasks in your list:
-    1. [T] [X] read book
-    2. [D] [ ] return book (by: June 6th)
-    3. [E] [ ] project meeting (at: Aug 6th 2-4pm)
-    4. [T] [X] join sports club
-    5. [T] [ ] return cs2113 textbook
-    6. [E] [ ] attend TIPS closing ceremoney (at: 25th November 2-4pm)
-    Total number of tasks is: 6
+    Remaining number of tasks: 7
     ------------------------------
     ------------------------------
     Bye. Hope to see you again soon!

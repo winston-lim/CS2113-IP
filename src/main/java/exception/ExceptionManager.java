@@ -2,7 +2,7 @@ package exception;
 
 import java.io.IOException;
 
-import console.Console;
+import user.UserInteraction;
 
 public class ExceptionManager {
     public static final String DEFAULT_ERROR_MESSAGE = "something went wrong";
@@ -14,7 +14,7 @@ public class ExceptionManager {
      */
     public static void handleException(Exception e) {
         String errorMessage = DEFAULT_ERROR_MESSAGE;
-        if (e instanceof IndexOutOfBoundsException) {
+        if (e instanceof IndexOutOfBoundsException || e instanceof ArrayIndexOutOfBoundsException) {
             errorMessage = "invalid arguments";
         }
         if (e instanceof CommandNotFoundException) {
@@ -27,8 +27,11 @@ public class ExceptionManager {
             errorMessage = "task specified was not found";
         }
         if (e instanceof IOException) {
-            errorMessage = "failed to save locally";
+            errorMessage = "failed to read from or write to file";
         }
-        Console.printErrorResponse(errorMessage);
+        if (e instanceof InvalidFileDataException) {
+            errorMessage = "invalid file data";
+        }
+        UserInteraction.printErrorResponse(errorMessage);
     }
 }

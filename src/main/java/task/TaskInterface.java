@@ -5,6 +5,12 @@ interface TaskInterface {
 
     public void setStatus(boolean isDone);
 
+    public String getTitle();
+
+    public String getTaskType();
+
+    public String getTaskTiming();
+
     public String getStatusIcon();
 
     public String getDescription();
