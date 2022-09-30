@@ -31,6 +31,8 @@
 
 Winston is a Personal Assistant Chatbot acts as a task manager for you.
 
+![welcome.png](welcome.png)
+
 ### Listing recorded tasks: `list`
 
 List all recorded tasks, including the task count.
